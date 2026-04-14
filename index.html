@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>家族關西行 · 主辦人面板</title>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Google Fonts: Inter + Noto Sans TC -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+        },
+        colors: {
+          // Nordic / Quiet Luxury palette
+          bg:     '#F4F1ED',   // warm cream
+          surface:'#FFFFFF',
+          muted:  '#EAE6E0',
+          border: '#D8D3CB',
+          ink:    '#1C1A17',
+          sub:    '#7A756D',
+          accent: '#3D6B5C',   // muted forest green
+          warn:   '#8B5E3C',   // warm amber-brown
+          danger: '#8B3A3A',   // muted red
+          ok:     '#3D6B5C',   // same as accent
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  /* ── Base ── */
+  * { -webkit-tap-highlight-color: transparent; }
+  body {
+    background: #F4F1ED;
+    font-family: 'Inter', 'Noto Sans TC', sans-serif;
+    color: #1C1A17;
+    overscroll-behavior: none;
+  }
+
+  /* ── Scrollbar hide ── */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* ── Smooth transitions ── */
+  .fade-in { animation: fadeIn 0.18s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* ── Timeline vertical line ── */
+  .timeline-line::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 32px;
+    bottom: -16px;
+    width: 1px;
+    background: #D8D3CB;
+  }
+
+  /* ── Status dot ── */
+  .dot-todo    { background: #D8D3CB; }
+  .dot-active  { background: #3D6B5C; box-shadow: 0 0 0 3px rgba(61,107,92,0.2); }
+  .dot-done    { background: #7A756D; }
+
+  /* ── Card tap feedback ── */
+  .tap-card:active { background: #EAE6E0; }
+
+  /* ── Tab active ── */
+  .tab-active span { color: #1C1A17; }
+  .tab-active .tab-dot { background: #3D6B5C; }
+
+  /* ── Toast ── */
+  #toast {
+    position: fixed; bottom: 88px; left: 50%; transform: translateX(-50%) translateY(16px);
+    background: #1C1A17; color: #F4F1ED;
+    padding: 8px 20px; border-radius: 99px;
+    font-size: 13px; font-weight: 500;
+    opacity: 0; transition: all 0.25s ease;
+    pointer-events: none; white-space: nowrap; z-index: 9999;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── Guide mode overlay ── */
+  #guide-overlay {
+    transition: opacity 0.2s ease;
+  }
+
+  /* ── Details expand ── */
+  .details-panel {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.28s ease;
+  }
+  .details-panel.open {
+    max-height: 600px;
+  }
+
+  /* ── Progress bar ── */
+  .progress-bar {
+    transition: width 0.4s ease;
+  }
+
+  /* ── Quick badge pulse ── */
+  .pulse-badge {
+    animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; } 50% { opacity:.6; }
+  }
+</style>
+</head>
+
+<body class="min-h-screen">
+
+<!-- ════════════════════════════════════════
+     DATA: Itinerary JSON
+     ════════════════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────
+// EDIT THIS DATA to update your itinerary.
+// Each day has: header info + timeline items.
+// ─────────────────────────────────────────
+const TRIP = {
+  name: "2026 家族關西行",
+  dates: "7/18–7/23",
+  region: "神戶 · 姬路 · 大阪",
+
+  // Global emergency contacts
+  emergency: {
+    police:   "110",
+    ambulance:"119",
+    driver:   "（出發前填入）",
+    taiwan:   "+81-6-6443-8481",
+  },
+
+  // Golden rules shown in Guide Mode
+  golden: [
+    "先拍照、先吃飯、單向移動、不折返",
+    "走散時不找人 → 直接前往當日指定集合點等待",
+    "備妥 2–3 個 IKEA 大環保袋，傍晚統一裝購物袋",
+    "每次搭車前後清點人數，上車點名、下車確認",
+    "七月酷暑：多找地下街走，保留體力給購物觀光",
+  ],
+
+  days: [
+    // ────────────────────────────────
+    // DAY 1
+    // ────────────────────────────────
+    {
+      id: "day1",
+      label: "Day 1",
+      date: "7/18（六）",
+      title: "神戶入境",
+      people: "10大7小",
+      transport: "包車全程",
+      hotel: "神戶中央區 Kotonoocho",
+      meetup: "包車停車處（出口外）",
+      motto: "先拍照、先吃飯、單向移動、不折返",
+      route: "神戶空港 → 動物王國 → 麵包超人博物館 → 馬賽克港區 → JR三宮",
+      memos: [
+        "神戶動物王國飛鳥秀時間務必出發前確認（官網或電話）",
+        "麵包超人博物館表演時刻表需提前查好",
+        "MOSAIC 港區晚餐強烈建議預訂，7月旺季人多",
+        "包車司機聯絡方式放在手機顯眼位置",
+        "全天走散集合點：包車司機停車處（出發前告知全員）",
+      ],
+      timeline: [
+        {
+          id: "d1-1", time: "10:30", title: "神戶機場抵達",
+          summary: "入境 · 領行李 · 清點17人",
+          notes: "預計 1 小時完成入境 + 提領行李。確認包車司機已等候出口外。清點 10大7小（共17人）。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d1-2", time: "11:30", title: "包車出發 → 動物王國",
+          summary: "車程約20–25分鐘",
+          notes: "車上宣布今日行程與廁所時間。提醒孩子不要在車上亂跑。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d1-3", time: "12:00–13:00", title: "神戶動物王國 · 午餐",
+          summary: "帶隊者先確認座位（17人需2–3桌）",
+          notes: "門票需事先確認是否已購或現場買。立即前往餐廳排隊，避免尖峰等候。午餐後宣布下午行程流程。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d1-4", time: "13:00–14:30", title: "動物互動 草泥馬・水豚",
+          summary: "孩子優先排隊互動項目",
+          notes: "帶隊者確認每個小孩都有大人陪同。分組方式：小孩分為兩波排隊。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d1-5", time: "14:30–15:00", title: "⚠ 飛鳥秀（條件式）",
+          summary: "若飛鳥秀15:00才開始 → 等完再離開",
+          notes: "條件式：若飛鳥秀15:00才開始 → 等完再離開。若孩子疲累 → 可提前14:30離開前往下一站。",
+          type: "note", status: "todo"
+        },
+        {
+          id: "d1-6", time: "15:30", title: "麵包超人兒童博物館",
+          summary: "車程約30分鐘。表演時刻表提前確認。",
+          notes: "條件式：若15:30有表演 → 先看表演。若16:00才有表演 → 先帶孩子逛館內。帶隊者需提前確認當日表演時刻表。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d1-7", time: "17:00", title: "集合 → 馬賽克港區出發",
+          summary: "確認無人落隊，車程約10分鐘",
+          notes: "集合全員，確認無人落隊。前往馬賽克港區（車程約10分鐘）。",
+          type: "meetup", status: "todo"
+        },
+        {
+          id: "d1-8", time: "17:30–17:50", title: "⚠ 馬賽克摩天輪（條件式）",
+          summary: "排隊<15分鐘 → 搭；否則跳過",
+          notes: "條件式：排隊＜15分鐘 → 搭乘。排隊較長 → 跳過，直接前往BE KOBE拍照。",
+          type: "note", status: "todo"
+        },
+        {
+          id: "d1-9", time: "17:50–18:20", title: "BE KOBE 地標大合照",
+          summary: "17人大合照 · 孩子前排大人後排",
+          notes: "帶隊拍攝17人大合照。孩子站前排，大人後排，海港為背景。",
+          type: "photo", status: "todo"
+        },
+        {
+          id: "d1-10", time: "18:20–19:30", title: "MOSAIC 餐廳晚餐",
+          summary: "先確認訂位 · 分2–3桌 · 孩子先點餐",
+          notes: "先確認餐廳訂位（強烈建議提前預訂）。分2–3桌就坐，孩子先點餐。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d1-11", time: "19:30", title: "包車返回住宿",
+          summary: "JR三宮附近，車程約20分鐘",
+          notes: "前往JR三宮站附近住宿（車程約20分鐘）。確認所有人上車後出發。",
+          type: "transport", status: "todo"
+        },
+      ]
+    },
+
+    // ────────────────────────────────
+    // DAY 2
+    // ────────────────────────────────
+    {
+      id: "day2",
+      label: "Day 2",
+      date: "7/19（日）",
+      title: "姬路城 + 神戶",
+      people: "10大7小",
+      transport: "包車全程",
+      hotel: "神戶中央區 Kotonoocho（連住）",
+      meetup: "包車停車處",
+      motto: "先合照、再登頂、體力不夠就拍照",
+      route: "住宿 → 姬路城 → 城前商店街 → 北野天滿神社・異人館 → 六甲牧場 → Steak Land",
+      memos: [
+        "姬路城天守閣7月旺季排隊時間長，提前確認是否要登頂",
+        "Steak Land 神戶牛排需提前訂位，17人需分桌（最好同時段）",
+        "六甲牧場僅停留30分鐘，霜淇淋食用後即刻整隊",
+        "明日（7/20）換住大阪，確認行李打包與退房時間",
+      ],
+      timeline: [
+        {
+          id: "d2-1", time: "08:30", title: "住宿出發",
+          summary: "清點17人，包車前往姬路城",
+          notes: "清點17人。包車前往姬路城（車程約1小時15分）。車上可讓孩子補眠。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d2-2", time: "09:45", title: "姬路城抵達",
+          summary: "停車場下車 → 步行至城門入口",
+          notes: "停車場下車後步行至城門入口。確認購票是否提前處理。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d2-3", time: "09:45–12:00", title: "⚠ 姬路城遊覽（條件式）",
+          summary: "體力充足 → 登天守閣；長輩 → 庭園散步",
+          notes: "條件式：若體力充足 → 登天守閣（需排隊，預留時間）。若有推車或長輩不便 → 庭園散步+拍照。天守閣制高點拍17人合照（指定集合地點）。",
+          type: "note", status: "todo"
+        },
+        {
+          id: "d2-4", time: "12:00–13:00", title: "城前商店街午餐",
+          summary: "人潮多 → 任選餐廳分批；13:00入口集合",
+          notes: "條件式：若人潮多 → 商店街任選餐廳分批用餐。宣布：13:00在商店街入口集合。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d2-5", time: "13:00", title: "包車出發 → 北野天滿神社",
+          summary: "車程約1小時，孩子可午睡",
+          notes: "前往北野天滿神社（車程約1小時）。孩子可在車上午睡補體力。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d2-6", time: "14:00–15:30", title: "北野天滿神社・異人館街",
+          summary: "山頂往下散步最省力 · 15:30集合",
+          notes: "司機停於山頂停車場。帶隊方向：山頂→往下散步（最省力）。自由逛異人館，帶隊者走在隊伍最後。15:20廣播集合，15:30整隊出發。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d2-7", time: "15:30–16:00", title: "六甲牧場 霜淇淋",
+          summary: "停留30分鐘 · 全員購買後拍照",
+          notes: "停留約30分鐘，享用牧場霜淇淋。全員購買後拍照留念。結束後包車前往JR三宮站（車程約15分鐘）。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d2-8", time: "17:30", title: "⭐ Steak Land 神戶牛排",
+          summary: "A5神戶牛現場鐵板燒 · 需提前訂位",
+          notes: "強力推薦：A5神戶牛現場鐵板燒。強烈建議提前訂位（預算¥5,000–10,000/位）。確認分桌安排，孩子優先就座。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d2-9", time: "19:30", title: "返回住宿",
+          summary: "包車接送或步行（JR三宮附近）",
+          notes: "包車接送或自行步行（住宿在JR三宮附近）。確認所有行李帶回。",
+          type: "transport", status: "todo"
+        },
+      ]
+    },
+
+    // ────────────────────────────────
+    // DAY 3
+    // ────────────────────────────────
+    {
+      id: "day3",
+      label: "Day 3",
+      date: "7/20（一）",
+      title: "勝尾寺 + 池田 + 萬博",
+      people: "8大5小",
+      transport: "包車全程（今日最後包車日）",
+      hotel: "大阪西成區 Bainan（花園町）",
+      meetup: "各景點停車場集合",
+      motto: "退房完整 · 行李不離車 · 今夜起改地鐵",
+      route: "退房 → 勝尾寺 → 日清泡麵紀念館 → 萬博紀念公園 → 大阪花園町",
+      memos: [
+        "勝尾寺石板路 → 確認長輩與孩子鞋況",
+        "My Cup Noodles Factory 強烈建議提前預約",
+        "太陽之塔內部須提前網路預約（若有）",
+        "大阪住宿入住後，告知明日地鐵路線：花園町站搭谷町線至谷町四丁目",
+        "確認每人交通卡餘額充足（建議至少¥2,000以上）",
+        "7/20之後包車結束，改自行搭地鐵，務必說明走散規則",
+      ],
+      timeline: [
+        {
+          id: "d3-1", time: "08:00–09:00", title: "神戶住宿退房",
+          summary: "確認全員行李上車 · 清點13人（8大5小）",
+          notes: "確認全員行李上車。清點13人（8大5小）。提醒：此後所有行李在包車上，注意貴重物品。",
+          type: "meetup", status: "todo"
+        },
+        {
+          id: "d3-2", time: "09:00", title: "包車出發 → 勝尾寺",
+          summary: "車程約50–60分鐘",
+          notes: "前往勝尾寺，車程約50–60分鐘。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d3-3", time: "09:30–11:30", title: "勝尾寺 勝運達摩寺",
+          summary: "達摩必拍 · 注意石板坡道 · 11:30整隊",
+          notes: "達摩擺設極具特色，必拍！⚠有石板坡道，請確認長輩與孩子穿舒適步鞋。帶隊走寺內主要參道，指定合照地點。11:00廣播集合，11:30整隊離開。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d3-4", time: "11:30–12:30", title: "勝尾寺午餐",
+          summary: "境內茶屋或周邊餐廳 · 分2桌快速",
+          notes: "停留約30分鐘，選擇境內茶屋或周邊餐廳。分2桌用餐，快速結束準備出發。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d3-5", time: "13:00", title: "包車出發 → 日清紀念館",
+          summary: "車程約20–30分鐘",
+          notes: "前往池田日清泡麵發明紀念館，車程約20–30分鐘。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d3-6", time: "13:00–13:45", title: "日清泡麵發明紀念館 展區",
+          summary: "自由參觀 · 13:45館內廣場集合",
+          notes: "自由參觀泡麵發明史展區。帶隊指定13:45集合地點（館內廣場）。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d3-7", time: "13:45–14:45", title: "⚠ My Cup Noodles Factory",
+          summary: "體驗自製泡麵¥500/人 · 強烈建議提前預約",
+          notes: "體驗自製泡麵（約¥500/人）。⚠強烈建議提前網路預約，旺季排隊長。孩子優先完成，大人協助。",
+          type: "note", status: "todo"
+        },
+        {
+          id: "d3-8", time: "14:45–15:00", title: "紀念品選購",
+          summary: "泡麵周邊商品 · 限時15分鐘 · 15:00停車場集合",
+          notes: "泡麵周邊商品，限時15分鐘。15:00在館外停車場集合。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d3-9", time: "15:30–17:00", title: "⚠ 萬博紀念公園 太陽之塔",
+          summary: "內部需提前預約 · 未訂就外拍+EXPOCITY",
+          notes: "⚠太陽之塔內部須事先網路預約！（確認是否已訂）若未訂 → 在外部拍照+EXPOCITY購物中心休息。集合時間：17:00停車場。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d3-10", time: "17:30", title: "包車出發 → 大阪花園町",
+          summary: "今日最長車程約30–40分鐘，孩子可休息",
+          notes: "車程約30–40分鐘，為今日最長車程。孩子可在車上休息。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d3-11", time: "18:00", title: "花園町晚餐",
+          summary: "鄰近鶴橋韓國城 · A/B組各選餐廳",
+          notes: "餐廳選擇豐富，鄰近鶴橋韓國城。可分A、B組各自選擇餐廳，同時段用餐。宣布：明日08:30出發（自行搭地鐵）。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d3-12", time: "19:00", title: "大阪住宿 Bainan 入住",
+          summary: "確認Check-in · 告知明日地鐵 · 檢查交通卡",
+          notes: "確認所有人辦好Check-in。告知明日行程：自行搭地鐵，集合時間08:30。⚠確認每人都有交通卡（ICOCA/Suica）且有餘額。",
+          type: "meetup", status: "todo"
+        },
+      ]
+    },
+
+    // ────────────────────────────────
+    // DAY 4
+    // ────────────────────────────────
+    {
+      id: "day4",
+      label: "Day 4",
+      date: "7/21（二）",
+      title: "大阪城 + 梅田",
+      people: "8大5小",
+      transport: "自行搭地鐵",
+      hotel: "大阪西成區 Bainan（花園町）",
+      meetup: "LINKS UMEDA 7F 電梯口",
+      motto: "森之宮進城搭小火車，谷町四丁目出城上梅田",
+      route: "花園町 → 四橋線 → 本町換中央線 → 森之宮 → 大阪城 → 谷町四丁目 → 東梅田 → LINKS UMEDA → Mizuno → 地下街 → 大站前第2大樓",
+      transit: [
+        { route: "四橋線 Y線", from: "花園町 Y17", to: "本町 Y13", note: "換車！步行10–15分鐘" },
+        { route: "中央線（本町換乘）", from: "本町 C16", to: "森之宮 C19", note: "⚠兩線月台距離極遠！" },
+        { route: "谷町線（大阪城後）", from: "谷町四丁目 T23", to: "東梅田 T20", note: "3站直達，6分鐘" },
+        { route: "四橋線（回程）", from: "西梅田 Y11", to: "花園町 Y17", note: "直達，無需轉乘" },
+      ],
+      memos: [
+        "本町換乘：兩線月台距離極遠，務必告知全員不要著急",
+        "大手門出園後往谷町四丁目，確認1-B電梯進站",
+        "LINKS UMEDA 走散集合點：7F電梯口（務必出發前宣布）",
+        "Mizuno到居酒屋街：走地下街ディアモール，避免酷暑",
+      ],
+      timeline: [
+        {
+          id: "d4-1", time: "07:50", title: "住宿出發",
+          summary: "清點13人 · 確認水壺、防曬、交通卡",
+          notes: "清點13人（8大5小）。確認水壺、防曬、交通卡全員攜帶。",
+          type: "meetup", status: "todo"
+        },
+        {
+          id: "d4-2", time: "08:00", title: "花園町站 Y17 搭四橋線",
+          summary: "建議3B號出口電梯 · 往住之江公園方向",
+          notes: "建議電梯進站：3B號出口。引導長輩與孩子走3B號電梯出口下月台。搭往本町方向（往住之江公園方向反向，注意月台）。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d4-3", time: "08:15", title: "⚠ 本町站 Y13 換乘中央線",
+          summary: "步行10–15分鐘！跟「エレベーター」指標",
+          notes: "⚠兩線月台距離極遠，步行10–15分鐘！沿指標「エレベーター」全程跟著走。孩子走在大人中間，推車跟電梯指標。不要著急，本町地下通路長但指標清楚。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d4-4", time: "08:40", title: "森之宮站 C19 出站",
+          summary: "往大阪城公園東側 JO-TERRACE 方向",
+          notes: "出站往大阪城公園東側（JO-TERRACE OSAKA方向）。建議出口：3-A或3-B。目標：JO-TERRACE OSAKA/Information Station。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d4-5", time: "09:00", title: "⭐ 大阪城 Road Train",
+          summary: "入公園直奔Road Train排隊 · 上下車清點",
+          notes: "⭐口訣：森之宮進城搭小火車，谷町四丁目出城上梅田。入公園即直奔Road Train乘車點排隊。上車前清點13人，下車也要清點。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d4-6", time: "09:20–10:30", title: "天守閣遊覽 + 13人大合照",
+          summary: "大合照優先 · 10:30大手門集合出園",
+          notes: "⭐大合照優先，遊覽其次。10:20廣播催人，10:30大手門集合，10:40出園。完成合照後給自由活動時間。",
+          type: "photo", status: "todo"
+        },
+        {
+          id: "d4-7", time: "10:40", title: "大手門出園 → 谷町四丁目",
+          summary: "不走回森之宮 · 步行5–8分鐘 · 1-B出口電梯",
+          notes: "不走回森之宮，直接往西側大手門出園。步行約5–8分鐘至谷町四丁目站。建議進站口：1-B出口（有電梯）。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d4-8", time: "10:55", title: "谷町四丁目 T23 → 東梅田 T20",
+          summary: "3站直達約6分鐘 · 進站前清點13人",
+          notes: "3站直達，約6分鐘。無需轉乘。進站前清點13人，東梅田下車。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d4-9", time: "11:10", title: "東梅田 → LINKS UMEDA",
+          summary: "Exit 1電梯 · 步行約7分鐘 · 宣布集合點",
+          notes: "Exit 1有電梯。步行約7分鐘至LINKS UMEDA。⭐走散集合點宣布：LINKS UMEDA 7F電梯口。",
+          type: "meetup", status: "todo"
+        },
+        {
+          id: "d4-10", time: "11:20–14:20", title: "LINKS UMEDA 午餐 + 購物",
+          summary: "8F午餐 → 4F鞋 → 1–2F UNIQLO · 14:20集合",
+          notes: "立即上8F餐廳，分2–3桌就座。宣布：14:20在7F電梯口集合，走散不找人。14:10開始廣播收攏。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d4-11", time: "14:30", title: "Mizuno 大阪茶屋町旗艦店",
+          summary: "7層樓 · 跑鞋童鞋全齊 · 15:25整隊",
+          notes: "從LINKS UMEDA步行約5分鐘。7層樓，大人跑鞋・小孩童鞋全齊。15:20廣播集合，15:25整隊出發。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d4-12", time: "15:25", title: "⭐ 地下街 ディアモール",
+          summary: "酷暑走地下街 · 全程冷氣不曬太陽",
+          notes: "七月酷暑：走地下街「ディアモール」，全程冷氣不曬太陽。路線：Mizuno→南走JR大阪站→進地下街→跟「北新地駅」指標→第2大樓B2。約18–20分鐘，15:45抵達。",
+          type: "note", status: "todo"
+        },
+        {
+          id: "d4-13", time: "16:00–17:50", title: "大阪站前第2大樓 居酒屋街",
+          summary: "B1/B2 · 昭和懷舊 · 17:30廣播集合",
+          notes: "40年老大樓，各式商店。分組自由逛，17:30廣播集合。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d4-14", time: "18:00", title: "晚餐 B1/B2 居酒屋街",
+          summary: "昭和懷舊平價 · 分2桌 · 孩子優先",
+          notes: "昭和懷舊風格，平價豐富。分2桌，孩子優先入座。",
+          type: "food", status: "todo"
+        },
+        {
+          id: "d4-15", time: "19:30", title: "西梅田 → 四橋線 → 花園町",
+          summary: "直達約10分鐘 · 上車前清點13人",
+          notes: "四橋線直達，約10分鐘。西梅田站：無障礙電梯進站。上車前清點13人，確認IKEA環保袋齊全。",
+          type: "transport", status: "todo"
+        },
+      ]
+    },
+
+    // ────────────────────────────────
+    // DAY 5
+    // ────────────────────────────────
+    {
+      id: "day5",
+      label: "Day 5",
+      date: "7/22（三）",
+      title: "難波 + 道頓堀",
+      people: "8大5小",
+      transport: "自行搭地鐵",
+      hotel: "大阪西成區 Bainan（花園町）",
+      meetup: "唐吉訶德道頓堀店 黃色摩天輪正下方",
+      motto: "先拍合照、先掃固力果、後血拼",
+      route: "花園町 → 四橋線 → 難波 → 八阪神社 → ABC-MART → 戎橋固力果 → 心齋橋/Fishing Max → 唐吉訶德大會合 → 回程",
+      transit: [
+        { route: "四橋線（往程）", from: "花園町 Y17", to: "難波 Y15", note: "2站約5分鐘，無需轉乘" },
+        { route: "四橋線（回程）", from: "難波 Y15", to: "花園町 Y17", note: "⚠嚴格走地面，Exit 26-B或26-C（電梯）" },
+      ],
+      memos: [
+        "難波出站：務必走Exit 30，避免Exit 32（無電梯）",
+        "分流時：帶隊者跟A組（人數多），副手帶B組去Fishing Max",
+        "唐吉訶德退稅：提前指派1人去排隊，護照務必隨身帶",
+        "回程：嚴格走地面四橋筋，Exit 26-B或26-C進站，絕不走地下街",
+      ],
+      timeline: [
+        {
+          id: "d5-1", time: "08:45", title: "住宿出發",
+          summary: "清點13人確認後出發",
+          notes: "清點13人（8大5小）。確認人員齊全後出發。",
+          type: "meetup", status: "todo"
+        },
+        {
+          id: "d5-2", time: "09:00", title: "花園町 Y17 → 難波 Y15",
+          summary: "四橋線直達2站5分鐘 · 3B號電梯進站",
+          notes: "四橋線直達，2站約5分鐘。花園町建議進站：3B號電梯。無需轉乘，直達難波。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d5-3", time: "09:15", title: "難波站出站 → 難波八阪神社",
+          summary: "Exit 30（電梯）· 避開Exit 32（無電梯）",
+          notes: "建議出口：Exit 30（有電梯）。⚠避開Exit 32（無電梯）。帶頭走Exit 30，步行約5分鐘至神社。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d5-4", time: "09:30–10:00", title: "⭐ 難波八阪神社 大合照",
+          summary: "巨型獅子殿前13人合照 · 早晨人少光線好",
+          notes: "⭐巨型獅子殿前拍13人大合照（早晨人少光線好）。合照先拍，再自由參拜。10:00前整隊離開，步行往ABC-MART。",
+          type: "photo", status: "todo"
+        },
+        {
+          id: "d5-5", time: "11:00–12:00", title: "ABC-MART GRAND STAGE 難波",
+          summary: "補買鞋款 · 孩子可在外商場休息 · 12:00集合",
+          notes: "補齊前一天未買款式。孩子可在店外商場休息區等待。12:00集合步行往戎橋。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d5-6", time: "12:10", title: "⭐ 戎橋 固力果合照 + 午餐",
+          summary: "先拍13人固力果大合照 · 13:30前分流",
+          notes: "Exit 14步行約3分鐘至戎橋。⭐先拍13人大合照（固力果招牌背景）。之後就近餐廳分2–3桌午餐。13:20前吃完，13:30出發分流。",
+          type: "photo", status: "todo"
+        },
+        {
+          id: "d5-7", time: "13:30–16:00", title: "⭐ 黃金分流作戰",
+          summary: "A組心齋橋血拼 · B組Fishing Max釣具",
+          notes: "A組（人多組）：帶隊者跟隨，心齋橋藥妝服飾血拼。B組：副手帶隊，前往Fishing Max難波釣具。→Fishing Max：Exit 6步行1分鐘，可退稅，帶護照。→B組要求：15:30收尾，15:45撤退。",
+          type: "note", status: "todo"
+        },
+        {
+          id: "d5-8", time: "16:15", title: "⭐ 唐吉訶德道頓堀 全員大會合",
+          summary: "黃色摩天輪正下方 · 清點13人",
+          notes: "黃色摩天輪正下方集合。⭐這是Day 5走散集合點。Exit 14步行2–5分鐘。清點13人，評估孩子體力與戰利品數量。",
+          type: "meetup", status: "todo"
+        },
+        {
+          id: "d5-9", time: "16:30", title: "⚠ 道頓堀遊船（條件式）",
+          summary: "有體力 → Tombori River Cruise；疲累 → 河畔休息",
+          notes: "條件式：若有體力 → 搭Tombori River Cruise（約20分鐘，整點/半點發船）。若想休息 → 河畔享用甜點，讓孩子放鬆。船票在唐吉訶德旁碼頭購買。",
+          type: "note", status: "todo"
+        },
+        {
+          id: "d5-10", time: "17:30–18:30", title: "唐吉訶德最後掃貨",
+          summary: "退稅組排隊 · 採買組補貨 · 顧小孩組守門 · 18:20門口集合",
+          notes: "任務分工：退稅組（帶護照）→指派1人先去排隊。採買組→補買零食、雜貨、伴手禮。顧小孩組→一組大人在外顧孩子+戰利品。18:20全員在門口集合。",
+          type: "spot", status: "todo"
+        },
+        {
+          id: "d5-11", time: "18:30", title: "難波站回程",
+          summary: "⚠走地面四橋筋 · Exit 26-B或C · 最後清點",
+          notes: "⚠嚴格走地面四橋筋，禁止走地下街（避免迷路）。建議進站：Exit 26-B或26-C（有電梯）。四橋線直達花園町，無需轉乘。⭐上車前最後清點13人。",
+          type: "transport", status: "todo"
+        },
+      ]
+    },
+
+    // ────────────────────────────────
+    // DAY 6
+    // ────────────────────────────────
+    {
+      id: "day6",
+      label: "Day 6",
+      date: "7/23（四）",
+      title: "返程離境",
+      people: "8大5小",
+      transport: "四橋線 + 南海電鐵",
+      hotel: "大阪西成區 Bainan（花園町）退房",
+      meetup: "關西空港 KIX",
+      motto: "護照在手 · 行李完整 · 提前3小時到機場",
+      route: "花園町 → 四橋線 → 難波 → 南海電鐵 空港急行 → 關西空港（約40–50分鐘）",
+      memos: [
+        "花園町→難波搭四橋線，難波轉南海電鐵空港急行",
+        "建議提前3小時抵達機場（暑假旺季人多）",
+        "機場退稅：需出示護照+退稅收據+購買商品（海關蓋章）",
+        "確認所有退稅收據已處理",
+      ],
+      timeline: [
+        {
+          id: "d6-1", time: "早晨", title: "住宿退房",
+          summary: "確認行李齊全 · 護照人手一本",
+          notes: "確認行李全員帶齊，無遺留在房間。確認所有成員護照在手，有效期至少6個月以上。",
+          type: "meetup", status: "todo"
+        },
+        {
+          id: "d6-2", time: "出發前", title: "離境核對清單",
+          summary: "護照 · 機票 · 退房 · 行李 · 退稅收據",
+          notes: "□確認所有成員護照有效期至少6個月以上\n□確認機票登機時間與航廈（關西空港KIX）\n□退房時間確認（Bainan退房時間）\n□行李全員帶齊，無遺留在房間\n□確認所有退稅收據已處理（可在機場海關辦理）",
+          type: "note", status: "todo"
+        },
+        {
+          id: "d6-3", time: "前往機場", title: "花園町 → 難波 → 關西空港",
+          summary: "四橋線到難波，換南海電鐵空港急行",
+          notes: "花園町站搭四橋線前往難波（Y17→Y15，2站）。難波站換乘南海電鐵，搭空港急行前往關西空港（約40–50分鐘）。建議提前3小時抵達機場（暑假旺季人多）。",
+          type: "transport", status: "todo"
+        },
+        {
+          id: "d6-4", time: "關西空港", title: "機場退稅 & 出境",
+          summary: "出示護照+退稅收據+商品 · 海關蓋章",
+          notes: "機場退稅：需出示護照+退稅收據+購買商品（海關蓋章）。確認機票登機時間與航廈。平安回台！",
+          type: "note", status: "todo"
+        },
+      ]
+    },
+  ]
+};
+</script>
+
+<!-- ════════════════════════════════════════
+     APP SHELL
+     ════════════════════════════════════════ -->
+
+<!-- Fixed Header -->
+<header id="app-header" class="fixed top-0 left-0 right-0 z-50 bg-bg/95 backdrop-blur-sm border-b border-border" style="border-color:#D8D3CB;">
+  <div class="max-w-md mx-auto px-4 pt-3 pb-2">
+    <!-- Row 1: Trip name + Guide toggle -->
+    <div class="flex items-center justify-between mb-1">
+      <div>
+        <p id="header-trip-name" class="text-xs text-sub font-medium tracking-widest uppercase"></p>
+        <p id="header-region" class="text-xs text-sub"></p>
+      </div>
+      <button id="guide-toggle" onclick="toggleGuideMode()"
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200"
+        style="border-color:#D8D3CB; color:#7A756D; background:#fff;">
+        <span id="guide-icon">⚡</span>
+        <span id="guide-label">帶隊模式</span>
+      </button>
+    </div>
+    <!-- Row 2: Day nav -->
+    <div class="flex items-center gap-2 mt-2">
+      <button onclick="changeDay(-1)" class="w-7 h-7 flex items-center justify-center rounded-full text-sub hover:bg-muted active:scale-95 transition-all text-sm" style="color:#7A756D;">‹</button>
+      <div class="flex-1 text-center">
+        <div id="header-day-label" class="text-base font-semibold" style="color:#1C1A17;"></div>
+        <div id="header-day-date" class="text-xs" style="color:#7A756D;"></div>
+      </div>
+      <button onclick="changeDay(1)" class="w-7 h-7 flex items-center justify-center rounded-full text-sub hover:bg-muted active:scale-95 transition-all text-sm" style="color:#7A756D;">›</button>
+    </div>
+    <!-- Row 3: Progress bar -->
+    <div class="mt-2 h-0.5 rounded-full overflow-hidden" style="background:#EAE6E0;">
+      <div id="progress-bar" class="h-full rounded-full progress-bar" style="background:#3D6B5C; width:0%;"></div>
+    </div>
+    <div class="flex justify-between mt-0.5">
+      <span id="progress-text" class="text-xs" style="color:#7A756D;"></span>
+      <span id="progress-pct" class="text-xs font-medium" style="color:#3D6B5C;"></span>
+    </div>
+  </div>
+</header>
+
+<!-- Main scrollable content -->
+<main id="app-main" class="max-w-md mx-auto overflow-y-auto no-scrollbar" style="padding-top:130px; padding-bottom:72px;">
+
+  <!-- ── ITINERARY TAB ── -->
+  <div id="tab-itinerary" class="tab-view">
+
+    <!-- Today Overview Card -->
+    <section class="px-4 pt-4 pb-2">
+      <div id="overview-card" class="rounded-2xl p-4" style="background:#fff; border:1px solid #EAE6E0;">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <p id="ov-label" class="text-xs font-semibold tracking-widest uppercase mb-0.5" style="color:#3D6B5C;"></p>
+            <h2 id="ov-title" class="text-xl font-bold" style="color:#1C1A17;"></h2>
+          </div>
+          <div id="ov-people-badge" class="text-xs font-semibold px-2.5 py-1 rounded-full" style="background:#EAE6E0; color:#3D6B5C;"></div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="flex items-center gap-2">
+            <span style="color:#7A756D;">🚌</span>
+            <span id="ov-transport" style="color:#7A756D;"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span style="color:#7A756D;">🏨</span>
+            <span id="ov-hotel" class="line-clamp-1" style="color:#7A756D;"></span>
+          </div>
+          <div class="col-span-2 flex items-start gap-2">
+            <span style="color:#7A756D;">📍</span>
+            <span id="ov-meetup" style="color:#7A756D;"></span>
+          </div>
+        </div>
+
+        <div id="ov-motto-box" class="mt-3 pt-3 border-t flex items-start gap-2" style="border-color:#EAE6E0;">
+          <span class="text-xs">💬</span>
+          <p id="ov-motto" class="text-xs font-medium leading-relaxed" style="color:#1C1A17;"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Action Buttons -->
+    <section class="px-4 py-2">
+      <div class="grid grid-cols-4 gap-2">
+        <button onclick="showQuickInfo('meetup')" class="flex flex-col items-center gap-1 py-3 rounded-xl active:scale-95 transition-all" style="background:#fff; border:1px solid #EAE6E0;">
+          <span class="text-lg">📍</span>
+          <span class="text-xs font-medium" style="color:#1C1A17;">集合點</span>
+        </button>
+        <button onclick="showQuickInfo('transit')" class="flex flex-col items-center gap-1 py-3 rounded-xl active:scale-95 transition-all" style="background:#fff; border:1px solid #EAE6E0;">
+          <span class="text-lg">🚇</span>
+          <span class="text-xs font-medium" style="color:#1C1A17;">交通</span>
+        </button>
+        <button onclick="showQuickInfo('emergency')" class="flex flex-col items-center gap-1 py-3 rounded-xl active:scale-95 transition-all" style="background:#FAEAEA; border:1px solid #F0D0D0;">
+          <span class="text-lg">🆘</span>
+          <span class="text-xs font-semibold" style="color:#8B3A3A;">緊急</span>
+        </button>
+        <button onclick="showQuickInfo('memo')" class="flex flex-col items-center gap-1 py-3 rounded-xl active:scale-95 transition-all" style="background:#fff; border:1px solid #EAE6E0;">
+          <span class="text-lg">📋</span>
+          <span class="text-xs font-medium" style="color:#1C1A17;">導遊備忘</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Route Overview -->
+    <section class="px-4 py-1">
+      <div id="route-bar" class="px-3 py-2 rounded-xl text-xs leading-relaxed" style="background:#EAE6E0; color:#7A756D;"></div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="px-4 pt-3 pb-2">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-semibold tracking-wide uppercase" style="color:#7A756D;">行程時間軸</h3>
+        <button onclick="markAllDone()" class="text-xs px-2.5 py-1 rounded-full" style="color:#7A756D; border:1px solid #D8D3CB; background:#fff;">全部完成</button>
+      </div>
+      <div id="timeline-container"></div>
+    </section>
+  </div>
+
+  <!-- ── TRANSIT TAB ── -->
+  <div id="tab-transit" class="tab-view hidden">
+    <div class="px-4 pt-4">
+      <h3 class="text-sm font-semibold uppercase tracking-widest mb-3" style="color:#7A756D;">今日地鐵路線</h3>
+      <div id="transit-content"></div>
+      <div class="mt-4 rounded-2xl p-4" style="background:#fff; border:1px solid #EAE6E0;">
+        <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#7A756D;">帶隊黃金原則</p>
+        <div id="golden-rules-list" class="space-y-2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CHECKLIST TAB ── -->
+  <div id="tab-checklist" class="tab-view hidden">
+    <div class="px-4 pt-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm font-semibold uppercase tracking-widest" style="color:#7A756D;">行程清單</h3>
+        <button onclick="clearDayStatus()" class="text-xs px-2.5 py-1 rounded-full" style="color:#7A756D; border:1px solid #D8D3CB; background:#fff;">重置今日</button>
+      </div>
+      <div id="checklist-content"></div>
+    </div>
+  </div>
+
+  <!-- ── MEMO TAB ── -->
+  <div id="tab-memo" class="tab-view hidden">
+    <div class="px-4 pt-4">
+      <h3 class="text-sm font-semibold uppercase tracking-widest mb-3" style="color:#7A756D;">備忘 & 緊急</h3>
+
+      <!-- Emergency -->
+      <div class="rounded-2xl p-4 mb-3" style="background:#FAEAEA; border:1px solid #F0D0D0;">
+        <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#8B3A3A;">🆘 緊急聯絡</p>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span style="color:#7A756D;">日本警察</span>
+            <a href="tel:110" class="font-bold" style="color:#8B3A3A;">110</a>
+          </div>
+          <div class="flex justify-between">
+            <span style="color:#7A756D;">日本救護</span>
+            <a href="tel:119" class="font-bold" style="color:#8B3A3A;">119</a>
+          </div>
+          <div class="flex justify-between">
+            <span style="color:#7A756D;">包車司機</span>
+            <span class="font-medium" style="color:#1C1A17;" id="memo-driver"></span>
+          </div>
+          <div class="flex justify-between">
+            <span style="color:#7A756D;">台灣駐大阪辦事處</span>
+            <a id="memo-taiwan" href="#" class="font-medium text-xs" style="color:#3D6B5C;"></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day memos -->
+      <div id="memo-day-section" class="rounded-2xl p-4 mb-3" style="background:#fff; border:1px solid #EAE6E0;">
+        <p id="memo-day-title" class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#1C1A17;"></p>
+        <div id="memo-day-list" class="space-y-2"></div>
+      </div>
+
+      <!-- Golden rules -->
+      <div class="rounded-2xl p-4" style="background:#fff; border:1px solid #EAE6E0;">
+        <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#1C1A17;">帶隊黃金原則</p>
+        <div id="golden-rules-memo" class="space-y-2"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── BOTTOM TAB BAR ── -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 border-t" style="background:#F4F1ED; border-color:#D8D3CB;">
+  <div class="max-w-md mx-auto grid grid-cols-4 py-1" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);">
+    <button onclick="switchTab('itinerary')" id="tabn-itinerary" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
+      <span class="text-lg">🗓</span>
+      <span class="text-xs" style="color:#7A756D;">行程</span>
+      <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
+    </button>
+    <button onclick="switchTab('transit')" id="tabn-transit" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
+      <span class="text-lg">🚇</span>
+      <span class="text-xs" style="color:#7A756D;">交通</span>
+      <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
+    </button>
+    <button onclick="switchTab('checklist')" id="tabn-checklist" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
+      <span class="text-lg">✅</span>
+      <span class="text-xs" style="color:#7A756D;">清單</span>
+      <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
+    </button>
+    <button onclick="switchTab('memo')" id="tabn-memo" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
+      <span class="text-lg">📋</span>
+      <span class="text-xs" style="color:#7A756D;">備忘</span>
+      <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
+    </button>
+  </div>
+</nav>
+
+<!-- ── QUICK INFO MODAL ── -->
+<div id="quick-modal" onclick="closeQuickModal(event)" class="fixed inset-0 z-[200] hidden items-end justify-center" style="background:rgba(28,26,23,0.5);">
+  <div id="quick-modal-content" onclick="event.stopPropagation()" class="w-full max-w-md rounded-t-2xl p-5 pb-8 fade-in" style="background:#fff; max-height:80vh; overflow-y:auto;">
+    <div class="w-10 h-1 rounded-full mx-auto mb-4" style="background:#D8D3CB;"></div>
+    <div id="quick-modal-body"></div>
+  </div>
+</div>
+
+<!-- ── GUIDE MODE OVERLAY ── -->
+<div id="guide-overlay" class="fixed inset-0 z-[100] hidden flex-col" style="background:#1C1A17; padding-top: env(safe-area-inset-top, 0px);">
+  <div class="max-w-md mx-auto w-full h-full flex flex-col px-5 py-4 overflow-y-auto no-scrollbar">
+
+    <!-- Guide header -->
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <p id="gm-day" class="text-xs font-semibold tracking-widest uppercase" style="color:#3D6B5C;"></p>
+        <h2 id="gm-title" class="text-2xl font-bold" style="color:#F4F1ED;"></h2>
+      </div>
+      <button onclick="toggleGuideMode()" class="px-3 py-1.5 rounded-full text-xs font-semibold" style="background:#3D6B5C; color:#F4F1ED;">關閉</button>
+    </div>
+
+    <!-- Key info grid -->
+    <div class="grid grid-cols-2 gap-2 mb-4">
+      <div class="rounded-xl p-3" style="background:#2A2824;">
+        <p class="text-xs mb-1" style="color:#7A756D;">人數</p>
+        <p id="gm-people" class="text-lg font-bold" style="color:#F4F1ED;"></p>
+      </div>
+      <div class="rounded-xl p-3" style="background:#2A2824;">
+        <p class="text-xs mb-1" style="color:#7A756D;">交通</p>
+        <p id="gm-transport" class="text-sm font-semibold leading-tight" style="color:#F4F1ED;"></p>
+      </div>
+    </div>
+
+    <!-- Meetup point -->
+    <div class="rounded-xl p-3 mb-4" style="background:#1A2E28; border:1px solid #2D4A3E;">
+      <p class="text-xs mb-1" style="color:#3D6B5C;">📍 走散集合點</p>
+      <p id="gm-meetup" class="text-base font-bold" style="color:#F4F1ED;"></p>
+    </div>
+
+    <!-- Motto -->
+    <div class="rounded-xl p-3 mb-4" style="background:#2A2824; border-left:3px solid #3D6B5C;">
+      <p class="text-xs mb-1" style="color:#7A756D;">今日口訣</p>
+      <p id="gm-motto" class="text-sm font-semibold leading-relaxed" style="color:#F4F1ED;"></p>
+    </div>
+
+    <!-- Active / next items -->
+    <div class="mb-4">
+      <p class="text-xs font-semibold tracking-widest uppercase mb-2" style="color:#7A756D;">進行中 / 下一站</p>
+      <div id="gm-active-items" class="space-y-2"></div>
+    </div>
+
+    <!-- Emergency strip -->
+    <div class="rounded-xl p-3 mt-auto" style="background:#3A1A1A; border:1px solid #6B3A3A;">
+      <p class="text-xs mb-2" style="color:#CC7777;">🆘 緊急號碼</p>
+      <div class="flex gap-4 text-sm">
+        <span style="color:#F4F1ED;">警察 <strong>110</strong></span>
+        <span style="color:#F4F1ED;">救護 <strong>119</strong></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div id="toast"></div>
+
+<!-- ════════════════════════════════════════
+     APP LOGIC
+     ════════════════════════════════════════ -->
+<script>
+// ── State ──
+let state = {
+  currentDay: 0,       // index into TRIP.days
+  guideMode: false,
+  currentTab: 'itinerary',
+  // item statuses stored per-item: { [itemId]: 'todo'|'active'|'done' }
+  statuses: {},
+  expandedItems: {},   // { [itemId]: true/false }
+};
+
+// ── localStorage key ──
+const LS_KEY = 'trip_state_v1';
+
+// ── Type icons and colors ──
+const TYPE_META = {
+  transport: { icon: '🚌', color: '#5E7A8B', label: '交通' },
+  food:      { icon: '🍽', color: '#8B6B3D', label: '餐飲' },
+  spot:      { icon: '🏛', color: '#3D6B5C', label: '景點' },
+  meetup:    { icon: '📍', color: '#8B3A3A', label: '集合' },
+  photo:     { icon: '📸', color: '#5E4B8B', label: '合照' },
+  note:      { icon: '⚠️', color: '#8B5E3C', label: '注意' },
+};
+
+// ──────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────
+function init() {
+  loadState();
+  renderAll();
+  switchTab(state.currentTab);
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(LS_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state.currentDay = parsed.currentDay ?? 0;
+      state.guideMode  = parsed.guideMode  ?? false;
+      state.statuses   = parsed.statuses   ?? {};
+      state.currentTab = parsed.currentTab ?? 'itinerary';
+    }
+  } catch(e) { /* ignore */ }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      currentDay: state.currentDay,
+      guideMode:  state.guideMode,
+      statuses:   state.statuses,
+      currentTab: state.currentTab,
+    }));
+  } catch(e) { /* ignore */ }
+}
+
+// ──────────────────────────────────────────
+// RENDER ALL
+// ──────────────────────────────────────────
+function renderAll() {
+  const day = TRIP.days[state.currentDay];
+
+  // Header
+  document.getElementById('header-trip-name').textContent = TRIP.name;
+  document.getElementById('header-region').textContent = TRIP.dates + '　' + TRIP.region;
+  document.getElementById('header-day-label').textContent = day.label + '　' + day.title;
+  document.getElementById('header-day-date').textContent = day.date;
+
+  // Progress
+  renderProgress(day);
+
+  // Overview card
+  document.getElementById('ov-label').textContent = day.label + '　' + day.date;
+  document.getElementById('ov-title').textContent = day.title;
+  document.getElementById('ov-people-badge').textContent = day.people;
+  document.getElementById('ov-transport').textContent = day.transport;
+  document.getElementById('ov-hotel').textContent = day.hotel;
+  document.getElementById('ov-meetup').textContent = day.meetup;
+  document.getElementById('ov-motto').textContent = day.motto;
+
+  // Route bar
+  document.getElementById('route-bar').textContent = '📍 ' + day.route;
+
+  // Timeline
+  renderTimeline(day);
+
+  // Transit tab
+  renderTransit(day);
+
+  // Checklist tab
+  renderChecklist(day);
+
+  // Memo tab
+  renderMemo(day);
+
+  // Guide mode
+  if (state.guideMode) {
+    renderGuideMode(day);
+  }
+}
+
+// ──────────────────────────────────────────
+// PROGRESS BAR
+// ──────────────────────────────────────────
+function renderProgress(day) {
+  const total = day.timeline.length;
+  const done  = day.timeline.filter(i => getStatus(i.id) === 'done').length;
+  const pct   = total > 0 ? Math.round(done / total * 100) : 0;
+
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = `完成 ${done}/${total} 項`;
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+// ──────────────────────────────────────────
+// TIMELINE
+// ──────────────────────────────────────────
+function renderTimeline(day) {
+  const container = document.getElementById('timeline-container');
+  container.innerHTML = '';
+
+  day.timeline.forEach((item, idx) => {
+    const status   = getStatus(item.id);
+    const expanded = state.expandedItems[item.id] ?? false;
+    const isLast   = idx === day.timeline.length - 1;
+    const meta     = TYPE_META[item.type] || TYPE_META.spot;
+
+    const dotClass = status === 'done' ? 'dot-done' : status === 'active' ? 'dot-active' : 'dot-todo';
+
+    const card = document.createElement('div');
+    card.className = 'relative flex gap-3 pb-4' + (isLast ? '' : ' timeline-line');
+    card.innerHTML = `
+      <!-- Dot -->
+      <div class="flex-shrink-0 w-10 flex flex-col items-center pt-1 z-10">
+        <div class="${dotClass} w-3 h-3 rounded-full border-2 transition-all" style="border-color:#F4F1ED;"></div>
+      </div>
+
+      <!-- Card -->
+      <div class="flex-1 min-w-0">
+        <div class="rounded-xl overflow-hidden tap-card transition-colors cursor-pointer"
+             style="background:#fff; border:1px solid #EAE6E0; ${status==='done'?'opacity:0.55;':''}"
+             onclick="toggleExpand('${item.id}')">
+
+          <!-- Card header -->
+          <div class="px-3 py-2.5">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-0.5">
+                  <span class="text-xs" style="color:${meta.color};">${meta.icon}</span>
+                  <span class="text-xs font-medium" style="color:${meta.color};">${item.time}</span>
+                  ${status==='active' ? '<span class="pulse-badge text-xs px-1.5 py-0.5 rounded-full font-semibold" style="background:#EAF3EE;color:#3D6B5C;">進行中</span>' : ''}
+                  ${status==='done' ? '<span class="text-xs px-1.5 py-0.5 rounded-full" style="background:#EAE6E0;color:#7A756D;">✓ 完成</span>' : ''}
+                </div>
+                <p class="text-sm font-semibold leading-tight ${status==='done'?'line-through':''}" style="color:#1C1A17;">${item.title}</p>
+                <p class="text-xs mt-0.5 leading-relaxed" style="color:#7A756D;">${item.summary}</p>
+              </div>
+              <span class="text-xs flex-shrink-0 transition-transform duration-200 ${expanded?'rotate-180':''}" style="color:#D8D3CB;">▼</span>
+            </div>
+          </div>
+
+          <!-- Expanded details -->
+          <div class="details-panel ${expanded?'open':''}">
+            <div class="px-3 pb-3 border-t" style="border-color:#EAE6E0;">
+              <p class="text-xs leading-relaxed mt-2 whitespace-pre-line" style="color:#7A756D;">${item.notes}</p>
+              <!-- Status buttons -->
+              <div class="flex gap-2 mt-3">
+                <button onclick="event.stopPropagation(); setStatus('${item.id}','todo')"
+                  class="flex-1 py-1.5 rounded-lg text-xs font-medium transition-all active:scale-95"
+                  style="background:${status==='todo'?'#EAE6E0':'#F4F1ED'}; color:${status==='todo'?'#1C1A17':'#7A756D'}; border:1px solid #EAE6E0;">
+                  未開始
+                </button>
+                <button onclick="event.stopPropagation(); setStatus('${item.id}','active')"
+                  class="flex-1 py-1.5 rounded-lg text-xs font-medium transition-all active:scale-95"
+                  style="background:${status==='active'?'#EAF3EE':'#F4F1ED'}; color:${status==='active'?'#3D6B5C':'#7A756D'}; border:1px solid ${status==='active'?'#A8D0C0':'#EAE6E0'};">
+                  進行中
+                </button>
+                <button onclick="event.stopPropagation(); setStatus('${item.id}','done')"
+                  class="flex-1 py-1.5 rounded-lg text-xs font-medium transition-all active:scale-95"
+                  style="background:${status==='done'?'#3D6B5C':'#F4F1ED'}; color:${status==='done'?'#fff':'#7A756D'}; border:1px solid ${status==='done'?'#3D6B5C':'#EAE6E0'};">
+                  ✓ 完成
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ──────────────────────────────────────────
+// TRANSIT TAB
+// ──────────────────────────────────────────
+function renderTransit(day) {
+  const content = document.getElementById('transit-content');
+  content.innerHTML = '';
+
+  // Golden rules
+  const gr = document.getElementById('golden-rules-list');
+  gr.innerHTML = TRIP.golden.map((r,i) => `
+    <div class="flex items-start gap-2">
+      <span class="text-xs font-bold flex-shrink-0" style="color:#3D6B5C;">0${i+1}</span>
+      <p class="text-xs leading-relaxed" style="color:#7A756D;">${r}</p>
+    </div>
+  `).join('');
+
+  if (day.transit && day.transit.length > 0) {
+    const wrap = document.createElement('div');
+    wrap.className = 'space-y-2 mb-3';
+    day.transit.forEach(t => {
+      const card = document.createElement('div');
+      card.className = 'rounded-xl p-3';
+      card.style.cssText = 'background:#fff; border:1px solid #EAE6E0;';
+      card.innerHTML = `
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-bold" style="color:#1C1A17;">${t.route}</span>
+          <span class="text-xs px-2 py-0.5 rounded-full" style="background:#EAE6E0; color:#7A756D;">${t.note}</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs" style="color:#7A756D;">
+          <span class="font-medium" style="color:#3D6B5C;">${t.from}</span>
+          <span>→</span>
+          <span class="font-medium" style="color:#3D6B5C;">${t.to}</span>
+        </div>
+      `;
+      wrap.appendChild(card);
+    });
+    content.appendChild(wrap);
+  } else {
+    const noTransit = document.createElement('div');
+    noTransit.className = 'rounded-xl p-3 mb-3 text-xs';
+    noTransit.style.cssText = 'background:#fff; border:1px solid #EAE6E0; color:#7A756D;';
+    noTransit.textContent = '今日使用包車，無地鐵路線資訊。';
+    content.appendChild(noTransit);
+  }
+
+  // Route
+  const routeCard = document.createElement('div');
+  routeCard.className = 'rounded-xl p-3 mb-3';
+  routeCard.style.cssText = 'background:#EAE6E0;';
+  routeCard.innerHTML = `<p class="text-xs leading-relaxed" style="color:#7A756D;">📍 ${day.route}</p>`;
+  content.appendChild(routeCard);
+}
+
+// ──────────────────────────────────────────
+// CHECKLIST TAB
+// ──────────────────────────────────────────
+function renderChecklist(day) {
+  const content = document.getElementById('checklist-content');
+  content.innerHTML = '';
+
+  day.timeline.forEach(item => {
+    const status = getStatus(item.id);
+    const meta   = TYPE_META[item.type] || TYPE_META.spot;
+
+    const row = document.createElement('div');
+    row.className = 'flex items-center gap-3 py-2.5 border-b tap-card cursor-pointer rounded-lg px-2 -mx-2 active:bg-muted transition-colors';
+    row.style.borderColor = '#EAE6E0';
+    row.onclick = () => cycleStatus(item.id);
+    row.innerHTML = `
+      <div class="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center transition-all"
+           style="background:${status==='done'?'#3D6B5C':status==='active'?'#EAF3EE':'#EAE6E0'}; border:1.5px solid ${status==='done'?'#3D6B5C':status==='active'?'#3D6B5C':'#D8D3CB'};">
+        ${status==='done'?'<span style="color:#fff;font-size:10px;">✓</span>':status==='active'?'<span style="color:#3D6B5C;font-size:10px;">●</span>':''}
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-1.5">
+          <span class="text-xs" style="color:${meta.color};">${meta.icon}</span>
+          <span class="text-xs font-medium" style="color:${meta.color};">${item.time}</span>
+        </div>
+        <p class="text-sm font-medium truncate ${status==='done'?'line-through':''}" style="color:${status==='done'?'#7A756D':'#1C1A17'};">${item.title}</p>
+      </div>
+      <span class="text-xs flex-shrink-0 px-2 py-0.5 rounded-full"
+            style="background:${status==='done'?'#EAE6E0':status==='active'?'#EAF3EE':'transparent'}; color:${status==='done'?'#7A756D':status==='active'?'#3D6B5C':'#D8D3CB'};">
+        ${status==='done'?'完成':status==='active'?'進行中':'待辦'}
+      </span>
+    `;
+    content.appendChild(row);
+  });
+}
+
+// ──────────────────────────────────────────
+// MEMO TAB
+// ──────────────────────────────────────────
+function renderMemo(day) {
+  document.getElementById('memo-driver').textContent = TRIP.emergency.driver;
+  document.getElementById('memo-taiwan').textContent = TRIP.emergency.taiwan;
+  document.getElementById('memo-taiwan').href = 'tel:' + TRIP.emergency.taiwan.replace(/[^+\d]/g,'');
+
+  document.getElementById('memo-day-title').textContent = '📌 ' + day.label + ' 導遊備忘';
+  document.getElementById('memo-day-list').innerHTML = (day.memos || []).map(m => `
+    <div class="flex items-start gap-2">
+      <span class="text-xs flex-shrink-0 mt-0.5" style="color:#3D6B5C;">✓</span>
+      <p class="text-xs leading-relaxed" style="color:#7A756D;">${m}</p>
+    </div>
+  `).join('');
+
+  document.getElementById('golden-rules-memo').innerHTML = TRIP.golden.map((r,i) => `
+    <div class="flex items-start gap-2">
+      <span class="text-xs font-bold flex-shrink-0" style="color:#3D6B5C;">0${i+1}</span>
+      <p class="text-xs leading-relaxed" style="color:#7A756D;">${r}</p>
+    </div>
+  `).join('');
+}
+
+// ──────────────────────────────────────────
+// GUIDE MODE
+// ──────────────────────────────────────────
+function renderGuideMode(day) {
+  document.getElementById('gm-day').textContent = day.label + '　' + day.date;
+  document.getElementById('gm-title').textContent = day.title;
+  document.getElementById('gm-people').textContent = day.people;
+  document.getElementById('gm-transport').textContent = day.transport;
+  document.getElementById('gm-meetup').textContent = day.meetup;
+  document.getElementById('gm-motto').textContent = day.motto;
+
+  // Show active and next todo items
+  const items = day.timeline;
+  const activeItems = items.filter(i => getStatus(i.id) === 'active');
+  const nextItems   = items.filter(i => getStatus(i.id) === 'todo').slice(0, 3);
+  const showItems   = activeItems.length > 0 ? activeItems : nextItems;
+
+  document.getElementById('gm-active-items').innerHTML = showItems.length > 0
+    ? showItems.map(item => `
+        <div class="rounded-xl p-3" style="background:#2A2824; border:1px solid #3A3530;">
+          <div class="flex items-center gap-2 mb-0.5">
+            <span class="text-xs font-bold" style="color:#3D6B5C;">${item.time}</span>
+            ${getStatus(item.id)==='active'?'<span class="pulse-badge text-xs px-1.5 rounded-full font-semibold" style="background:#1A3A2A;color:#5DB899;">進行中</span>':'<span class="text-xs" style="color:#7A756D;">下一站</span>'}
+          </div>
+          <p class="text-sm font-semibold" style="color:#F4F1ED;">${item.title}</p>
+          <p class="text-xs leading-relaxed mt-0.5" style="color:#7A756D;">${item.summary}</p>
+        </div>
+      `).join('')
+    : '<p class="text-sm" style="color:#7A756D;">今日行程已全部完成 🎉</p>';
+}
+
+function toggleGuideMode() {
+  state.guideMode = !state.guideMode;
+  saveState();
+
+  const overlay  = document.getElementById('guide-overlay');
+  const toggleBtn = document.getElementById('guide-toggle');
+  const guideLabel = document.getElementById('guide-label');
+  const guideIcon  = document.getElementById('guide-icon');
+
+  if (state.guideMode) {
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    toggleBtn.style.background = '#3D6B5C';
+    toggleBtn.style.color = '#fff';
+    toggleBtn.style.borderColor = '#3D6B5C';
+    guideIcon.textContent = '✕';
+    guideLabel.textContent = '關閉';
+    renderGuideMode(TRIP.days[state.currentDay]);
+    showToast('帶隊模式已開啟');
+  } else {
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+    toggleBtn.style.background = '#fff';
+    toggleBtn.style.color = '#7A756D';
+    toggleBtn.style.borderColor = '#D8D3CB';
+    guideIcon.textContent = '⚡';
+    guideLabel.textContent = '帶隊模式';
+    showToast('已返回正常模式');
+  }
+}
+
+// ──────────────────────────────────────────
+// DAY NAVIGATION
+// ──────────────────────────────────────────
+function changeDay(delta) {
+  const newDay = state.currentDay + delta;
+  if (newDay < 0 || newDay >= TRIP.days.length) {
+    showToast(delta < 0 ? '已是第一天' : '已是最後一天');
+    return;
+  }
+  state.currentDay = newDay;
+  saveState();
+  renderAll();
+  // Scroll to top
+  document.getElementById('app-main').scrollTo({ top: 0, behavior: 'smooth' });
+  showToast(TRIP.days[newDay].label + '　' + TRIP.days[newDay].date);
+}
+
+// ──────────────────────────────────────────
+// STATUS MANAGEMENT
+// ──────────────────────────────────────────
+function getStatus(itemId) {
+  return state.statuses[itemId] || 'todo';
+}
+
+function setStatus(itemId, status) {
+  state.statuses[itemId] = status;
+  saveState();
+  renderAll();
+  const labels = { todo: '標記為未開始', active: '標記為進行中', done: '標記完成 ✓' };
+  showToast(labels[status] || '已更新');
+}
+
+function cycleStatus(itemId) {
+  const current = getStatus(itemId);
+  const next = current === 'todo' ? 'active' : current === 'active' ? 'done' : 'todo';
+  setStatus(itemId, next);
+}
+
+function markAllDone() {
+  const day = TRIP.days[state.currentDay];
+  day.timeline.forEach(item => { state.statuses[item.id] = 'done'; });
+  saveState();
+  renderAll();
+  showToast('今日行程全部完成 🎉');
+}
+
+function clearDayStatus() {
+  const day = TRIP.days[state.currentDay];
+  day.timeline.forEach(item => { delete state.statuses[item.id]; });
+  saveState();
+  renderAll();
+  showToast('今日狀態已重置');
+}
+
+// ──────────────────────────────────────────
+// EXPAND/COLLAPSE
+// ──────────────────────────────────────────
+function toggleExpand(itemId) {
+  state.expandedItems[itemId] = !state.expandedItems[itemId];
+  renderTimeline(TRIP.days[state.currentDay]);
+  renderChecklist(TRIP.days[state.currentDay]);
+}
+
+// ──────────────────────────────────────────
+// QUICK INFO MODAL
+// ──────────────────────────────────────────
+function showQuickInfo(type) {
+  const day = TRIP.days[state.currentDay];
+  const modal = document.getElementById('quick-modal');
+  const body  = document.getElementById('quick-modal-body');
+
+  let html = '';
+
+  if (type === 'meetup') {
+    html = `
+      <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#3D6B5C;">📍 走散集合點</p>
+      <p class="text-xl font-bold mb-3" style="color:#1C1A17;">${day.meetup}</p>
+      <p class="text-xs leading-relaxed" style="color:#7A756D;">走散時不找人，直接前往此集合點等待。</p>
+    `;
+  } else if (type === 'transit') {
+    html = `<p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#3D6B5C;">🚇 今日交通</p>`;
+    html += `<p class="text-sm font-semibold mb-3" style="color:#1C1A17;">${day.transport}</p>`;
+    if (day.transit && day.transit.length > 0) {
+      html += day.transit.map(t => `
+        <div class="rounded-xl p-3 mb-2" style="background:#F4F1ED; border:1px solid #EAE6E0;">
+          <p class="text-xs font-bold mb-1" style="color:#1C1A17;">${t.route}</p>
+          <p class="text-xs" style="color:#3D6B5C;">${t.from} → ${t.to}</p>
+          <p class="text-xs mt-1" style="color:#8B5E3C;">${t.note}</p>
+        </div>
+      `).join('');
+    } else {
+      html += '<p class="text-xs" style="color:#7A756D;">今日全程包車，無需搭乘地鐵。</p>';
+    }
+    html += `<div class="mt-3 p-3 rounded-xl" style="background:#EAE6E0;">
+      <p class="text-xs leading-relaxed" style="color:#7A756D;">路線：${day.route}</p>
+    </div>`;
+  } else if (type === 'emergency') {
+    html = `
+      <p class="text-xs font-bold uppercase tracking-widest mb-4" style="color:#8B3A3A;">🆘 緊急聯絡</p>
+      <div class="space-y-3">
+        <a href="tel:110" class="flex items-center justify-between p-3 rounded-xl" style="background:#FAEAEA; border:1px solid #F0D0D0;">
+          <span class="text-sm font-medium" style="color:#1C1A17;">日本警察</span>
+          <span class="text-2xl font-bold" style="color:#8B3A3A;">110</span>
+        </a>
+        <a href="tel:119" class="flex items-center justify-between p-3 rounded-xl" style="background:#FAEAEA; border:1px solid #F0D0D0;">
+          <span class="text-sm font-medium" style="color:#1C1A17;">日本救護</span>
+          <span class="text-2xl font-bold" style="color:#8B3A3A;">119</span>
+        </a>
+        <div class="flex items-center justify-between p-3 rounded-xl" style="background:#F4F1ED; border:1px solid #EAE6E0;">
+          <span class="text-sm font-medium" style="color:#1C1A17;">包車司機</span>
+          <span class="text-sm font-bold" style="color:#3D6B5C;">${TRIP.emergency.driver}</span>
+        </div>
+        <a href="tel:${TRIP.emergency.taiwan.replace(/[^+\d]/g,'')}" class="flex items-center justify-between p-3 rounded-xl" style="background:#F4F1ED; border:1px solid #EAE6E0;">
+          <span class="text-sm font-medium" style="color:#1C1A17;">台灣駐大阪辦事處</span>
+          <span class="text-xs font-bold" style="color:#3D6B5C;">${TRIP.emergency.taiwan}</span>
+        </a>
+      </div>
+    `;
+  } else if (type === 'memo') {
+    html = `<p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#1C1A17;">📌 ${day.label} 導遊備忘</p>`;
+    html += (day.memos || []).map((m,i) => `
+      <div class="flex items-start gap-2 mb-2">
+        <span class="text-xs flex-shrink-0 mt-0.5 font-bold" style="color:#3D6B5C;">✓</span>
+        <p class="text-sm leading-relaxed" style="color:#1C1A17;">${m}</p>
+      </div>
+    `).join('');
+  }
+
+  body.innerHTML = html;
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeQuickModal(event) {
+  const modal = document.getElementById('quick-modal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+// ──────────────────────────────────────────
+// TAB SWITCHING
+// ──────────────────────────────────────────
+function switchTab(tabName) {
+  state.currentTab = tabName;
+  saveState();
+
+  // Hide all tab views
+  document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+
+  // Show selected
+  const targetEl = document.getElementById('tab-' + tabName);
+  if (targetEl) {
+    targetEl.classList.remove('hidden');
+    targetEl.classList.add('fade-in');
+  }
+
+  // Update tab bar
+  document.querySelectorAll('[id^="tabn-"]').forEach(btn => {
+    btn.querySelector('.tab-dot').style.opacity = '0';
+    btn.querySelectorAll('span').forEach(s => s.style.color = '#7A756D');
+  });
+  const activeBtn = document.getElementById('tabn-' + tabName);
+  if (activeBtn) {
+    activeBtn.querySelector('.tab-dot').style.opacity = '1';
+    activeBtn.querySelectorAll('span').forEach((s,i) => {
+      if (i === 1) s.style.color = '#1C1A17'; // label
+    });
+  }
+}
+
+// ──────────────────────────────────────────
+// TOAST
+// ──────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+// ──────────────────────────────────────────
+// BOOT
+// ──────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
