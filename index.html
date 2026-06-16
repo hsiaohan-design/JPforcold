@@ -867,11 +867,188 @@ const TRIP = {
     </div>
   </div>
 
+  <!-- ── SHOPPING SCRIPT TAB ── -->
+  <div id="tab-shopping" class="tab-view hidden">
+    <div class="px-4 pt-4 pb-28">
+      <h3 class="text-sm font-semibold uppercase tracking-widest mb-1" style="color:#7A756D;">購物腳本</h3>
+      <p class="text-xs mb-4" style="color:#7A756D;">象印電鍋 NW-NA18｜Yodobashi / BicCamera → 關西空港取件</p>
+
+      <!-- COUPON LINKS -->
+      <div class="mb-4">
+        <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#7A756D;">🎫 日本優惠券懶人包</p>
+        <div class="flex flex-col gap-2">
+          <a href="https://s.beurlife.com/jp" target="_blank"
+             class="flex items-center gap-3 rounded-2xl px-4 py-3 active:opacity-70 transition-opacity"
+             style="background:#FEF3C7; border:1px solid #F5DFA0; text-decoration:none;">
+            <span class="text-2xl">🎫</span>
+            <div>
+              <div class="text-sm font-semibold" style="color:#1C1A17;">日本優惠券懶人包</div>
+              <div class="text-xs mt-0.5" style="color:#7A756D;">藥妝、餐廳、景點折扣一次整理</div>
+            </div>
+            <span class="ml-auto text-xs font-bold" style="color:#8B5E3C;">→</span>
+          </a>
+          <a href="https://japanportal.donki-global.com/coupon/cp001_zhtw.html" target="_blank"
+             class="flex items-center gap-3 rounded-2xl px-4 py-3 active:opacity-70 transition-opacity"
+             style="background:#FEF9C3; border:1px solid #F0E680; text-decoration:none;">
+            <span class="text-2xl">🐧</span>
+            <div>
+              <div class="text-sm font-semibold" style="color:#1C1A17;">唐吉訶德 驚安の殿堂</div>
+              <div class="text-xs mt-0.5" style="color:#7A756D;">官方優惠券，結帳直接出示</div>
+            </div>
+            <span class="ml-auto text-xs font-bold" style="color:#8B5E3C;">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="rounded-2xl mb-3 overflow-hidden" style="border:1px solid #EAE6E0;">
+        <div class="px-4 py-3" style="background:#3D6B5C;">
+          <p class="text-xs font-bold tracking-widest" style="color:#D4E9E2;">STEP 1</p>
+          <p class="text-sm font-semibold mt-0.5" style="color:#fff;">結帳櫃台：辦免稅</p>
+        </div>
+        <div class="divide-y" style="border-color:#EAE6E0;">
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-1.5 mb-1"><span class="text-sm">🇯🇵</span><span class="text-xs font-semibold" style="color:#7A756D;">日文（念給店員）</span></div>
+            <p class="text-sm font-medium leading-relaxed" style="color:#1C1A17;">これを購入したいです。パスポートで免税手続きをお願いします。</p>
+          </div>
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-1.5 mb-1"><span class="text-sm">🇺🇸</span><span class="text-xs font-semibold" style="color:#7A756D;">English</span></div>
+            <p class="text-sm" style="color:#1C1A17;">I'd like to buy this. Can I do tax-free with my passport, please?</p>
+          </div>
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-1.5 mb-1"><span class="text-sm">🇹🇼</span><span class="text-xs font-semibold" style="color:#7A756D;">中文</span></div>
+            <p class="text-sm" style="color:#1C1A17;">我要買這個，請幫我用護照辦理免稅。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="rounded-2xl mb-3 overflow-hidden" style="border:1px solid #EAE6E0;">
+        <div class="px-4 py-3" style="background:#3D6B5C;">
+          <p class="text-xs font-bold tracking-widest" style="color:#D4E9E2;">STEP 2</p>
+          <p class="text-sm font-semibold mt-0.5" style="color:#fff;">要求宅配到關西空港</p>
+        </div>
+        <div class="divide-y" style="border-color:#EAE6E0;">
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-1.5 mb-1"><span class="text-sm">🇯🇵</span><span class="text-xs font-semibold" style="color:#7A756D;">日文（完整念出）</span></div>
+            <p class="text-sm font-medium leading-relaxed" style="color:#1C1A17;">ヤマト運輸で関西国際空港に配送をお願いしたいです。7月23日に空港のヤマト宅急便カウンターで自分で受け取ります。「空港受け取りサービス」で手配していただけますか？</p>
+          </div>
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-1.5 mb-1"><span class="text-sm">🇺🇸</span><span class="text-xs font-semibold" style="color:#7A756D;">English</span></div>
+            <p class="text-sm" style="color:#1C1A17;">I'd like to ship this to Kansai International Airport via Yamato Transport. I'll pick it up at the Yamato counter at the airport on July 23rd. Can you arrange the airport pickup delivery service?</p>
+          </div>
+          <div class="px-4 py-3">
+            <div class="flex items-center gap-1.5 mb-1"><span class="text-sm">🇹🇼</span><span class="text-xs font-semibold" style="color:#7A756D;">中文</span></div>
+            <p class="text-sm" style="color:#1C1A17;">我想用黑貓宅急便寄到關西國際機場，7月23日親自到機場的宅急便櫃台取件，請幫我安排「機場受取服務」。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: 若店員看不懂 -->
+      <div class="rounded-2xl mb-3 overflow-hidden" style="border:1px solid #EAE6E0;">
+        <div class="px-4 py-3" style="background:#8B5E3C;">
+          <p class="text-xs font-bold tracking-widest" style="color:#F5E6D8;">STEP 2B</p>
+          <p class="text-sm font-semibold mt-0.5" style="color:#fff;">若店員說沒有此服務，補說</p>
+        </div>
+        <div class="px-4 py-3">
+          <div class="flex items-center gap-1.5 mb-1"><span class="text-sm">🇯🇵</span><span class="text-xs font-semibold" style="color:#7A756D;">日文</span></div>
+          <p class="text-sm font-medium leading-relaxed" style="color:#1C1A17;">荷物を空港に送って、カウンターで受け取ることはできますか？「空港宅急便」または「ゴルフ・スキー宅急便」でも構いません。</p>
+        </div>
+      </div>
+
+      <!-- STEP 3: Fill form -->
+      <div class="rounded-2xl mb-3" style="background:#fff; border:1px solid #EAE6E0;">
+        <div class="px-4 py-3" style="background:#3D6B5C; border-radius:16px 16px 0 0;">
+          <p class="text-xs font-bold tracking-widest" style="color:#D4E9E2;">STEP 3</p>
+          <p class="text-sm font-semibold mt-0.5" style="color:#fff;">填寫配送單（店員會給表格）</p>
+        </div>
+        <div class="px-4 py-3 space-y-2">
+          <div class="flex gap-2 text-xs">
+            <span class="font-semibold w-24 shrink-0" style="color:#7A756D;">配送日</span>
+            <span style="color:#1C1A17;">7月23日</span>
+          </div>
+          <div class="flex gap-2 text-xs">
+            <span class="font-semibold w-24 shrink-0" style="color:#7A756D;">受取人氏名</span>
+            <span style="color:#1C1A17;">護照英文姓名</span>
+          </div>
+          <div class="flex gap-2 text-xs">
+            <span class="font-semibold w-24 shrink-0" style="color:#7A756D;">電話番号</span>
+            <span style="color:#1C1A17;">手機（含 +886）</span>
+          </div>
+          <div class="flex gap-2 text-xs">
+            <span class="font-semibold w-24 shrink-0" style="color:#7A756D;">届け先住所</span>
+            <span style="color:#1C1A17;">関西国際空港 ヤマト宅急便カウンター（店員填）</span>
+          </div>
+          <div class="flex gap-2 text-xs">
+            <span class="font-semibold w-24 shrink-0" style="color:#7A756D;">受け取り方法</span>
+            <span style="color:#1C1A17;">窓口受け取り</span>
+          </div>
+          <p class="text-xs pt-1" style="color:#8B5E3C;">💡 結帳後保留「ヤマト伝票番号」，7/22 確認包裹已到機場</p>
+        </div>
+      </div>
+
+      <!-- STEP 4: Airport 7/23 -->
+      <div class="rounded-2xl mb-3 overflow-hidden" style="border:1px solid #EAE6E0;">
+        <div class="px-4 py-3" style="background:#3D6B5C;">
+          <p class="text-xs font-bold tracking-widest" style="color:#D4E9E2;">STEP 4｜7/23 機場流程</p>
+          <p class="text-sm font-semibold mt-0.5" style="color:#fff;">JX823 · 15:10 起飛 → 13:00 前抵達 KIX</p>
+        </div>
+        <div class="px-4 py-4 space-y-4">
+
+          <!-- 4-1 pick up -->
+          <div>
+            <p class="text-xs font-bold mb-1" style="color:#3D6B5C;">① 先去 Yamato 取件（KIX T1 入境大廳 B1F）</p>
+            <div class="space-y-2">
+              <div>
+                <span class="text-xs" style="color:#7A756D;">🇯🇵 </span>
+                <span class="text-xs font-medium" style="color:#1C1A17;">荷物を受け取りに来ました。こちらが伝票番号です。パスポートを見せます。</span>
+              </div>
+              <div>
+                <span class="text-xs" style="color:#7A756D;">🇺🇸 </span>
+                <span class="text-xs" style="color:#1C1A17;">I'm here to pick up a package. Here's the tracking number. Here's my passport.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4-2 check in -->
+          <div>
+            <p class="text-xs font-bold mb-1" style="color:#3D6B5C;">② 去 JX 星宇報到櫃台托運超大件</p>
+            <div class="space-y-2">
+              <div>
+                <span class="text-xs" style="color:#7A756D;">🇯🇵 </span>
+                <span class="text-xs font-medium" style="color:#1C1A17;">大型の荷物を預けたいです。超過サイズでも大丈夫ですか？</span>
+              </div>
+              <div>
+                <span class="text-xs" style="color:#7A756D;">🇺🇸 </span>
+                <span class="text-xs" style="color:#1C1A17;">I'd like to check in this oversized item. Is that okay?</span>
+              </div>
+              <div>
+                <span class="text-xs" style="color:#7A756D;">🇹🇼 </span>
+                <span class="text-xs" style="color:#1C1A17;">我要托運這件大型行李，超大件也可以嗎？</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- timeline -->
+          <div class="rounded-xl p-3 space-y-1.5" style="background:#F4F1ED;">
+            <p class="text-xs font-bold" style="color:#1C1A17;">⏰ 7/23 時間規劃</p>
+            <div class="flex gap-2 text-xs"><span class="w-14 shrink-0 font-medium" style="color:#3D6B5C;">13:00</span><span style="color:#1C1A17;">抵達 KIX</span></div>
+            <div class="flex gap-2 text-xs"><span class="w-14 shrink-0 font-medium" style="color:#3D6B5C;">13:00–13:20</span><span style="color:#1C1A17;">Yamato 取件（T1 B1F）</span></div>
+            <div class="flex gap-2 text-xs"><span class="w-14 shrink-0 font-medium" style="color:#3D6B5C;">13:20–13:50</span><span style="color:#1C1A17;">JX 星宇報到 + 托運</span></div>
+            <div class="flex gap-2 text-xs"><span class="w-14 shrink-0 font-medium" style="color:#3D6B5C;">14:00–14:30</span><span style="color:#1C1A17;">通關 + 出境審查</span></div>
+            <div class="flex gap-2 text-xs"><span class="w-14 shrink-0 font-medium" style="color:#3D6B5C;">15:10</span><span style="color:#1C1A17;">✈ JX823 起飛</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </main>
 
 <!-- ── BOTTOM TAB BAR ── -->
 <nav class="fixed bottom-0 left-0 right-0 z-50 border-t" style="background:#F4F1ED; border-color:#D8D3CB;">
-  <div class="max-w-md mx-auto grid grid-cols-4 py-1" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);">
+  <div class="max-w-md mx-auto grid grid-cols-5 py-1" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);">
     <button onclick="switchTab('itinerary')" id="tabn-itinerary" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
       <span class="text-lg">🗓</span>
       <span class="text-xs" style="color:#7A756D;">行程</span>
@@ -890,6 +1067,11 @@ const TRIP = {
     <button onclick="switchTab('memo')" id="tabn-memo" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
       <span class="text-lg">📋</span>
       <span class="text-xs" style="color:#7A756D;">備忘</span>
+      <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
+    </button>
+    <button onclick="switchTab('shopping')" id="tabn-shopping" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
+      <span class="text-lg">🛍</span>
+      <span class="text-xs" style="color:#7A756D;">購物</span>
       <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
     </button>
   </div>
