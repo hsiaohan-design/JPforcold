@@ -1044,11 +1044,76 @@ const TRIP = {
     </div>
   </div>
 
+  <!-- ── TAB: 票券 ── -->
+  <div id="tab-tickets" class="tab-view hidden">
+    <div class="px-4 pt-4 pb-28">
+      <h3 class="text-sm font-semibold uppercase tracking-widest mb-1" style="color:#7A756D;">票券管理</h3>
+      <p class="text-xs mb-4" style="color:#7A756D;">已購門票一覽｜手機出示 QR 碼即可入場</p>
+
+      <!-- 神戶動物王國 -->
+      <div class="rounded-2xl overflow-hidden mb-4" style="border:1px solid #EAE6E0;">
+        <!-- header -->
+        <div class="px-4 py-3 flex items-center justify-between" style="background:#3D6B5C;">
+          <div>
+            <p class="text-xs font-bold tracking-widest" style="color:#D4E9E2;">KKday · 已購✅</p>
+            <p class="text-base font-semibold mt-0.5" style="color:#fff;">🐾 神戸どうぶつ王国</p>
+          </div>
+          <span class="text-2xl">🦁</span>
+        </div>
+
+        <!-- ticket info -->
+        <div class="divide-y" style="border-color:#EAE6E0;">
+          <div class="px-4 py-3 space-y-2">
+            <div class="flex gap-2 text-xs">
+              <span class="font-semibold w-20 shrink-0" style="color:#7A756D;">訂單號</span>
+              <span style="color:#1C1A17; font-family:monospace;">26KK280210431</span>
+            </div>
+            <div class="flex gap-2 text-xs">
+              <span class="font-semibold w-20 shrink-0" style="color:#7A756D;">Rezio No.</span>
+              <span style="color:#1C1A17; font-family:monospace;">RZ260625XH2987</span>
+            </div>
+            <div class="flex gap-2 text-xs">
+              <span class="font-semibold w-20 shrink-0" style="color:#7A756D;">數量</span>
+              <span style="color:#1C1A17;">大人 ×11　子供 ×4　幼児 ×1</span>
+            </div>
+            <div class="flex gap-2 text-xs">
+              <span class="font-semibold w-20 shrink-0" style="color:#7A756D;">有效期限</span>
+              <span style="color:#1C1A17;">2026-07-25（購買後 30 日內）</span>
+            </div>
+          </div>
+
+          <!-- 使用方式 -->
+          <div class="px-4 py-3" style="background:#F0F7F4;">
+            <p class="text-xs font-bold mb-2" style="color:#3D6B5C;">📲 現場使用方式</p>
+            <div class="space-y-1.5 text-xs" style="color:#1C1A17;">
+              <p>① 開啟 KKday 電子票 PDF（已寄至信箱）</p>
+              <p>② 出示最上方的 <span class="font-bold">「一括認証QRコード」</span></p>
+              <p>③ 工作人員掃一次 → 全部 16 張同時認證完畢 ✅</p>
+            </div>
+            <p class="text-xs mt-2" style="color:#8B5E3C;">💡 不需要印出，也不用一張一張掃</p>
+          </div>
+
+          <!-- 地點交通 -->
+          <div class="px-4 py-3">
+            <p class="text-xs font-bold mb-2" style="color:#7A756D;">📍 地點 &amp; 交通</p>
+            <p class="text-xs mb-1" style="color:#1C1A17;">神戸市中央区港島南町7-1-9</p>
+            <p class="text-xs" style="color:#7A756D;">ポートライナー 計算科学センター駅 下車（神戸どうぶつ王国・「富岳」前）</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 預留空間說明 -->
+      <div class="rounded-2xl px-4 py-3 text-center" style="border:1px dashed #D8D3CB;">
+        <p class="text-xs" style="color:#7A756D;">其他票券可繼續加入此頁</p>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <!-- ── BOTTOM TAB BAR ── -->
 <nav class="fixed bottom-0 left-0 right-0 z-50 border-t" style="background:#F4F1ED; border-color:#D8D3CB;">
-  <div class="max-w-md mx-auto grid grid-cols-5 py-1" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);">
+  <div class="max-w-md mx-auto grid grid-cols-6 py-1" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);">
     <button onclick="switchTab('itinerary')" id="tabn-itinerary" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
       <span class="text-lg">🗓</span>
       <span class="text-xs" style="color:#7A756D;">行程</span>
@@ -1072,6 +1137,11 @@ const TRIP = {
     <button onclick="switchTab('shopping')" id="tabn-shopping" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
       <span class="text-lg">🛍</span>
       <span class="text-xs" style="color:#7A756D;">購物</span>
+      <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
+    </button>
+    <button onclick="switchTab('tickets')" id="tabn-tickets" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
+      <span class="text-lg">🎫</span>
+      <span class="text-xs" style="color:#7A756D;">票券</span>
       <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
     </button>
   </div>
