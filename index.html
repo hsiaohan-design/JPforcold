@@ -1137,11 +1137,90 @@ const TRIP = {
     </div>
   </div>
 
+  <!-- ── 晨跑路線 TAB ── -->
+  <div id="tab-running" class="tab-view hidden">
+    <div class="max-w-md mx-auto px-4 pt-4 pb-28 space-y-4">
+
+      <h2 class="text-base font-semibold" style="color:#1C1A17;">晨跑路線</h2>
+
+      <!-- 神戶 -->
+      <div class="rounded-2xl overflow-hidden" style="background:#fff; border:1px solid #E8E3DA;">
+        <div class="px-4 pt-4 pb-2">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-semibold" style="color:#7A756D;">神戶 · 二宮町 出發</span>
+            <span class="text-xs px-2 py-0.5 rounded-full" style="background:#E1F5EE; color:#0F6E56;">約 9–10 km</span>
+          </div>
+          <p class="text-sm font-medium" style="color:#1C1A17;">ハーバーランド → メリケンパーク 往復</p>
+        </div>
+        <div class="grid grid-cols-3 gap-0 px-4 pb-3">
+          <div class="text-center">
+            <p class="text-xs" style="color:#7A756D;">路面</p>
+            <p class="text-xs font-medium" style="color:#1C1A17;">市街+海沿い</p>
+          </div>
+          <div class="text-center">
+            <p class="text-xs" style="color:#7A756D;">起伏</p>
+            <p class="text-xs font-medium" style="color:#1C1A17;">南下 下り坂</p>
+          </div>
+          <div class="text-center">
+            <p class="text-xs" style="color:#7A756D;">推薦出発</p>
+            <p class="text-xs font-medium" style="color:#1C1A17;">6:00 前</p>
+          </div>
+        </div>
+        <div class="px-4 pb-4">
+          <a href="https://www.google.com/maps/dir/34.699,135.196/34.676,135.179/34.675,135.188/34.699,135.196/" target="_blank"
+             class="flex items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70 transition-opacity"
+             style="background:#3D6B5C; text-decoration:none;">
+            <span class="text-sm font-semibold" style="color:#fff;">🗺 Google Maps で開く</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 大阪 -->
+      <div class="rounded-2xl overflow-hidden" style="background:#fff; border:1px solid #E8E3DA;">
+        <div class="px-4 pt-4 pb-2">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-semibold" style="color:#7A756D;">大阪 · 梅南 出發</span>
+            <span class="text-xs px-2 py-0.5 rounded-full" style="background:#E1F5EE; color:#0F6E56;">約 5–7 km</span>
+          </div>
+          <p class="text-sm font-medium" style="color:#1C1A17;">天王寺公園 往復＋周回</p>
+        </div>
+        <div class="grid grid-cols-3 gap-0 px-4 pb-3">
+          <div class="text-center">
+            <p class="text-xs" style="color:#7A756D;">公園まで</p>
+            <p class="text-xs font-medium" style="color:#1C1A17;">片道 約1.5 km</p>
+          </div>
+          <div class="text-center">
+            <p class="text-xs" style="color:#7A756D;">公園 1周</p>
+            <p class="text-xs font-medium" style="color:#1C1A17;">約 1.5 km</p>
+          </div>
+          <div class="text-center">
+            <p class="text-xs" style="color:#7A756D;">推薦出発</p>
+            <p class="text-xs font-medium" style="color:#1C1A17;">6:00 前</p>
+          </div>
+        </div>
+        <div class="px-4 pb-4">
+          <a href="https://www.google.com/maps/dir/34.644,135.494/34.652,135.508/34.644,135.494/" target="_blank"
+             class="flex items-center justify-center gap-2 rounded-xl py-2.5 active:opacity-70 transition-opacity"
+             style="background:#3D6B5C; text-decoration:none;">
+            <span class="text-sm font-semibold" style="color:#fff;">🗺 Google Maps で開く</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 注意事項 -->
+      <div class="rounded-2xl px-4 py-3" style="background:#FFF8E7; border:1px solid #F0DFA0;">
+        <p class="text-xs font-semibold mb-1" style="color:#856A00;">7月 注意事項</p>
+        <p class="text-xs leading-relaxed" style="color:#5C4A00;">大阪・神戶の7月早朝は気温30℃超えになることも。必ず6:00前にスタート、水分を多めに持参してください。</p>
+      </div>
+
+    </div>
+  </div>
+
 </main>
 
 <!-- ── BOTTOM TAB BAR ── -->
 <nav class="fixed bottom-0 left-0 right-0 z-50 border-t" style="background:#F4F1ED; border-color:#D8D3CB;">
-  <div class="max-w-md mx-auto grid grid-cols-6 py-1" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);">
+  <div class="max-w-md mx-auto grid grid-cols-7 py-1" style="padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px);">
     <button onclick="switchTab('itinerary')" id="tabn-itinerary" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
       <span class="text-lg">🗓</span>
       <span class="text-xs" style="color:#7A756D;">行程</span>
@@ -1170,6 +1249,11 @@ const TRIP = {
     <button onclick="switchTab('tickets')" id="tabn-tickets" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
       <span class="text-lg">🎫</span>
       <span class="text-xs" style="color:#7A756D;">票券</span>
+      <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
+    </button>
+    <button onclick="switchTab('running')" id="tabn-running" class="flex flex-col items-center gap-0.5 py-1.5 active:opacity-60 transition-opacity">
+      <span class="text-lg">🏃</span>
+      <span class="text-xs" style="color:#7A756D;">晨跑</span>
       <div class="tab-dot w-1 h-1 rounded-full opacity-0" style="background:#3D6B5C; transition:opacity 0.15s;"></div>
     </button>
   </div>
