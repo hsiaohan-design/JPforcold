@@ -1050,6 +1050,96 @@ const TRIP = {
       <h3 class="text-sm font-semibold uppercase tracking-widest mb-1" style="color:#7A756D;">票券管理</h3>
       <p class="text-xs mb-4" style="color:#7A756D;">已購門票一覽｜手機出示 QR 碼即可入場</p>
 
+      <!-- ✈️ 航班資訊 -->
+      <div class="rounded-2xl overflow-hidden mb-4" style="border:1px solid #D6E4F0;">
+        <!-- header -->
+        <div class="px-4 py-3 flex items-center justify-between" style="background:#1D4ED8;">
+          <div>
+            <p class="text-xs font-bold tracking-widest" style="color:#BFDBFE;">星宇航空 STARLUX · 已購✅</p>
+            <p class="text-base font-semibold mt-0.5" style="color:#fff;">✈️ 台北 ⇄ 大阪 機票</p>
+          </div>
+          <span class="text-2xl">🛫</span>
+        </div>
+
+        <div class="divide-y" style="border-color:#E0EBFF;">
+          <!-- 去程 -->
+          <div class="px-4 py-3">
+            <p class="text-xs font-bold mb-2" style="color:#1D4ED8;">🛫 去程 · 7月18日（六）</p>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-lg font-bold" style="color:#1C1A17;">06:50</span>
+              <span class="text-xs" style="color:#7A756D;">桃園國際機場 T1</span>
+            </div>
+            <div class="flex items-center gap-1 text-xs mb-1" style="color:#7A756D;">
+              <span>↓</span><span>JX834｜約 2h40m</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-lg font-bold" style="color:#1C1A17;">10:30</span>
+              <span class="text-xs" style="color:#7A756D;">神戶機場 T2</span>
+            </div>
+          </div>
+
+          <!-- 回程 -->
+          <div class="px-4 py-3">
+            <p class="text-xs font-bold mb-2" style="color:#1D4ED8;">🛬 回程 · 7月23日（四）</p>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-lg font-bold" style="color:#1C1A17;">15:10</span>
+              <span class="text-xs" style="color:#7A756D;">關西國際機場 T1</span>
+            </div>
+            <div class="flex items-center gap-1 text-xs mb-1" style="color:#7A756D;">
+              <span>↓</span><span>JX823｜約 1h55m</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-lg font-bold" style="color:#1C1A17;">17:05</span>
+              <span class="text-xs" style="color:#7A756D;">臺灣桃園國際機場 T1</span>
+            </div>
+          </div>
+
+          <!-- 訂位代號 -->
+          <div class="px-4 py-3 space-y-2">
+            <p class="text-xs font-bold mb-1" style="color:#7A756D;">📋 訂位代號</p>
+            <div class="flex gap-2 text-xs items-center">
+              <span class="rounded-lg px-2 py-1 font-mono font-bold" style="background:#EFF6FF; color:#1D4ED8;">CNS323</span>
+              <span style="color:#7A756D;">LIU / CHIANG / KUO ×7人</span>
+            </div>
+            <div class="flex gap-2 text-xs items-center">
+              <span class="rounded-lg px-2 py-1 font-mono font-bold" style="background:#EFF6FF; color:#1D4ED8;">CO9AS7</span>
+              <span style="color:#7A756D;">LIN / KUO / CHIANG ×4人</span>
+            </div>
+          </div>
+
+          <!-- 行李 -->
+          <div class="px-4 py-3" style="background:#F0F4FF;">
+            <p class="text-xs font-bold mb-1.5" style="color:#1D4ED8;">🧳 行李規定（每人）</p>
+            <div class="space-y-1 text-xs" style="color:#1C1A17;">
+              <p>✔ 隨身物品 1件（30×40×10 cm，≤座椅下方）</p>
+              <p>✔ 手提行李 1件（56×36×23 cm）</p>
+              <p>✔ 託運行李 1件，<span class="font-bold">23 kg</span></p>
+              <p class="text-xs mt-1" style="color:#8B5E3C;">⚠️ 手提＋隨身物品合計不超過 7 kg</p>
+            </div>
+          </div>
+
+          <!-- 行程單 PDF -->
+          <div class="px-4 py-3">
+            <p class="text-xs font-bold mb-2" style="color:#7A756D;">📄 電子行程單</p>
+            <div class="space-y-2">
+              <a href="itinerary_CNS323.pdf" target="_blank"
+                 class="flex items-center justify-between rounded-xl px-3 py-2.5 active:opacity-70 transition-opacity"
+                 style="background:#EFF6FF; border:1px solid #BFDBFE; text-decoration:none;">
+                <span class="text-xs font-semibold" style="color:#1D4ED8;">行程單 A｜訂單 …919630</span>
+                <span class="text-xs" style="color:#1D4ED8;">開啟 PDF →</span>
+              </a>
+              <a href="itinerary_CO9AS7.pdf" target="_blank"
+                 class="flex items-center justify-between rounded-xl px-3 py-2.5 active:opacity-70 transition-opacity"
+                 style="background:#EFF6FF; border:1px solid #BFDBFE; text-decoration:none;">
+                <span class="text-xs font-semibold" style="color:#1D4ED8;">行程單 B｜訂單 …935694</span>
+                <span class="text-xs" style="color:#1D4ED8;">開啟 PDF →</span>
+              </a>
+            </div>
+            <p class="text-xs mt-2" style="color:#8B5E3C;">⚠️ 建議出發前 3 小時抵達機場 · 記得提前 online check-in</p>
+          </div>
+        </div>
+      </div>
+
       <!-- 神戶動物王國 -->
       <div class="rounded-2xl overflow-hidden mb-4" style="border:1px solid #EAE6E0;">
         <!-- header -->
