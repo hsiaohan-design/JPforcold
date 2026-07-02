@@ -644,11 +644,11 @@ const TRIP = {
       date: "7/23（四）",
       title: "返程離境",
       people: "8大5小",
-      transport: "四橋線 + 南海電鐵",
+      transport: "包車直達機場",
       hotel: "大阪西成區 Bainan（花園町）退房",
-      meetup: "關西空港 KIX",
+      meetup: "關西空港 KIX T1",
       motto: "護照在手 · 行李完整 · 提前3小時到機場",
-      route: "花園町 → 四橋線 → 難波 → 南海電鐵 空港急行 → 關西空港（約40–50分鐘）",
+      route: "花園町住宿 → 包車 → 關西空港 KIX T1（約40分鐘）",
       memos: [
         "花園町→難波搭四橋線，難波轉南海電鐵空港急行",
         "建議提前3小時抵達機場（暑假旺季人多）",
@@ -657,27 +657,27 @@ const TRIP = {
       ],
       timeline: [
         {
-          id: "d6-1", time: "早晨", title: "住宿退房",
+          id: "d6-1", time: "09:00", title: "住宿退房",
           summary: "確認行李齊全 · 護照人手一本",
-          notes: "確認行李全員帶齊，無遺留在房間。確認所有成員護照在手，有效期至少6個月以上。",
+          notes: "確認行李全員帶齊，無遺留在房間。確認所有成員護照在手，有效期至少6個月以上。告知包車司機預計11:30出發。",
           type: "meetup", status: "todo"
         },
         {
-          id: "d6-2", time: "出發前", title: "離境核對清單",
+          id: "d6-2", time: "11:00", title: "離境核對清單",
           summary: "護照 · 機票 · 退房 · 行李 · 退稅收據",
-          notes: "□確認所有成員護照有效期至少6個月以上\n□確認機票登機時間與航廈（關西空港KIX）\n□退房時間確認（Bainan退房時間）\n□行李全員帶齊，無遺留在房間\n□確認所有退稅收據已處理（可在機場海關辦理）",
+          notes: "□確認所有成員護照有效期至少6個月以上\n□確認機票登機時間與航廈（關西空港KIX T1）\n□退房時間確認（Bainan退房時間）\n□行李全員帶齊，無遺留在房間\n□確認所有退稅收據已處理（可在機場海關辦理）\n□清點13人（8大5小）",
           type: "note", status: "todo"
         },
         {
-          id: "d6-3", time: "前往機場", title: "花園町 → 難波 → 關西空港",
-          summary: "四橋線到難波，換南海電鐵空港急行",
-          notes: "花園町站搭四橋線前往難波（Y17→Y15，2站）。難波站換乘南海電鐵，搭空港急行前往關西空港（約40–50分鐘）。建議提前3小時抵達機場（暑假旺季人多）。",
+          id: "d6-3", time: "11:30", title: "包車出發 → 關西空港 KIX",
+          summary: "包車直達，約40分鐘 · 12:20抵達",
+          notes: "包車從花園町住宿直達關西空港 KIX，車程約40分鐘，預計12:20抵達。\n⚠ JX823 15:10起飛，建議13:00前辦好報到。\n抵達後：① Yamato取件（B1F）→ ② JX星宇報到+托運 → ③ 通關退稅。",
           type: "transport", status: "todo"
         },
         {
-          id: "d6-4", time: "關西空港", title: "機場退稅 & 出境",
-          summary: "出示護照+退稅收據+商品 · 海關蓋章",
-          notes: "機場退稅：需出示護照+退稅收據+購買商品（海關蓋章）。確認機票登機時間與航廈。平安回台！",
+          id: "d6-4", time: "12:20", title: "關西空港 KIX T1 抵達",
+          summary: "退稅 → 報到托運 → 通關出境",
+          notes: "⏰ 時間規劃：\n12:20 抵達 KIX T1\n12:20–12:40 Yamato取件（T1 B1F）\n12:40–13:10 JX星宇報到 + 托運超大件\n13:20–14:00 通關 + 出境審查 + 退稅（海關）\n15:10 ✈ JX823 起飛，平安回台！\n\n機場退稅：需出示護照＋退稅收據＋購買商品，海關蓋章後返台可退款。",
           type: "note", status: "todo"
         },
       ]
@@ -1247,10 +1247,10 @@ const TRIP = {
             <p class="text-xs font-bold mb-2" style="color:#3D6B5C;">📲 現場使用方式</p>
             <div class="space-y-1.5 text-xs" style="color:#1C1A17;">
               <p>① 點下方按鈕開啟電子票 PDF</p>
-              <p>② 出示最上方的 <span class="font-bold">「一括認証QRコード」</span></p>
+              <p>② <span class="font-bold">PDF 第一頁</span>即是「一括認証QRコード」，直接出示第一頁</p>
               <p>③ 工作人員掃一次 → 全部 16 張同時認證完畢 ✅</p>
             </div>
-            <p class="text-xs mt-2" style="color:#8B5E3C;">💡 不需要印出，也不用一張一張掃</p>
+            <p class="text-xs mt-2" style="color:#8B5E3C;">💡 不需要印出，不用滑頁，不用一張一張掃</p>
             <a href="26KK280210431.pdf" target="_blank"
                class="flex items-center justify-center gap-2 mt-3 rounded-xl py-2.5 active:opacity-70 transition-opacity"
                style="background:#3D6B5C; text-decoration:none;">
@@ -1772,7 +1772,7 @@ function renderTimeline(day) {
       <!-- Card -->
       <div class="flex-1 min-w-0">
         <div class="rounded-xl overflow-hidden tap-card transition-colors cursor-pointer"
-             style="background:#fff; border:1px solid #EAE6E0; ${status==='done'?'opacity:0.55;':''}"
+             style="background:${item.type==='note'?'#FFFCEB':'#fff'}; border:${item.type==='note'?'1.5px solid #E8D86A':'1px solid #EAE6E0'}; ${status==='done'?'opacity:0.55;':''}"
              onclick="toggleExpand('${item.id}')">
 
           <!-- Card header -->
