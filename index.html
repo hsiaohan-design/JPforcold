@@ -426,22 +426,22 @@ const TRIP = {
       id: "day4",
       label: "Day 4",
       date: "7/21（二）",
-      title: "大阪城 + 梅田",
+      title: "大阪城 → 梅田",
       people: "8大5小",
       transport: "自行搭地鐵",
       hotel: "大阪西成區 Bainan（花園町）",
       meetup: "LINKS UMEDA 7F 電梯口",
-      motto: "森之宮進城搭小火車，谷町四丁目出城上梅田",
-      route: "花園町 → 四橋線 → 本町換中央線 → 森之宮 → 大阪城 → 谷町四丁目 → 東梅田 → LINKS UMEDA → Mizuno → 地下街 → 大站前第2大樓",
+      motto: "森之宮進城搭小火車，JR大阪城公園搭環狀線上梅田",
+      route: "花園町 → 四橋線 → 本町換中央線 → 森之宮 → 大阪城 → JR大阪城公園 → 大阪站（環狀線）→ LINKS UMEDA → Mizuno → 地下街ディアモール → 大阪駅前第2大樓",
       transit: [
         { route: "四橋線 Y線", from: "花園町 Y17", to: "本町 Y13", note: "換車！步行10–15分鐘" },
         { route: "中央線（本町換乘）", from: "本町 C16", to: "森之宮 C19", note: "⚠兩線月台距離極遠！" },
-        { route: "谷町線（大阪城後）", from: "谷町四丁目 T23", to: "東梅田 T20", note: "3站直達，6分鐘" },
+        { route: "大阪環狀線（大阪城後）", from: "JR大阪城公園 JO-03", to: "大阪站 JR-A47", note: "4站，約12分鐘" },
         { route: "四橋線（回程）", from: "西梅田 Y11", to: "花園町 Y17", note: "直達，無需轉乘" },
       ],
       memos: [
         "本町換乘：兩線月台距離極遠，務必告知全員不要著急",
-        "大手門出園後往谷町四丁目，確認1-B電梯進站",
+        "10:30 JR大阪城公園站集合，搭大阪環狀線往天滿・大阪方向（外回り），大阪站下車",
         "LINKS UMEDA 走散集合點：7F電梯口（務必出發前宣布）",
         "Mizuno到居酒屋街：走地下街ディアモール，避免酷暑",
       ],
@@ -483,45 +483,45 @@ const TRIP = {
           type: "photo", status: "todo"
         },
         {
-          id: "d4-7", time: "10:40", title: "大手門出園 → 谷町四丁目",
-          summary: "不走回森之宮 · 步行5–8分鐘 · 1-B出口電梯",
-          notes: "不走回森之宮，直接往西側大手門出園。步行約5–8分鐘至谷町四丁目站。建議進站口：1-B出口（有電梯）。",
+          id: "d4-7", time: "10:30", title: "10:30 JR大阪城公園站集合",
+          summary: "公園東側出園 · 步行約5分鐘 · 13人廣場集合清點",
+          notes: "遊覽結束後往大阪城公園東側（JO-TERRACE OSAKA方向）出園，步行約5分鐘即到JR大阪城公園站。10:30全員在站前廣場集合，清點13人。",
           type: "transport", status: "todo"
         },
         {
-          id: "d4-8", time: "10:55", title: "谷町四丁目 T23 → 東梅田 T20",
-          summary: "3站直達約6分鐘 · 進站前清點13人",
-          notes: "3站直達，約6分鐘。無需轉乘。進站前清點13人，東梅田下車。",
+          id: "d4-8", time: "10:45", title: "🚆 JR大阪城公園 → 大阪站（大阪環狀線）",
+          summary: "外回り往天滿・大阪方向 · 4站約12分鐘 · 進站前清點13人",
+          notes: "搭大阪環狀線（外回り，往天滿・大阪方向）。JR大阪城公園站進站，4站約12分鐘，大阪站下車。進站前清點13人。電梯：JR大阪城公園站東口有電梯。",
           type: "transport", status: "todo"
         },
         {
-          id: "d4-9", time: "11:10", title: "東梅田 → LINKS UMEDA",
-          summary: "Exit 1電梯 · 步行約7分鐘 · 宣布集合點",
-          notes: "Exit 1有電梯。步行約7分鐘至LINKS UMEDA。⭐走散集合點宣布：LINKS UMEDA 7F電梯口。\n\n<a href=\"https://www.google.com/maps/dir/?api=1&origin=Higashi-Umeda+Station+Osaka&destination=LINKS+UMEDA&travelmode=walking\" target=\"_blank\" style=\"color:#3D6B5C;text-decoration:underline;\">🗺️ 東梅田→LINKS UMEDA 步行導航</a>",
+          id: "d4-9", time: "11:05", title: "大阪站 → LINKS UMEDA（步行）",
+          summary: "御堂筋南口出站 · 步行約5分鐘 · 宣布集合點",
+          notes: "JR大阪站下車，往御堂筋南口方向出站。出站後沿御堂筋往南步行約5分鐘即抵LINKS UMEDA。⭐走散集合點宣布：LINKS UMEDA 7F電梯口。\n\n<a href=\"https://www.google.com/maps/dir/?api=1&origin=Osaka+Station&destination=LINKS+UMEDA&travelmode=walking\" target=\"_blank\" style=\"color:#3D6B5C;text-decoration:underline;\">🗺️ 大阪站→LINKS UMEDA 步行導航</a>",
           type: "meetup", status: "todo"
         },
         {
-          id: "d4-10", time: "11:20–15:00", title: "LINKS UMEDA 午餐 + 購物",
-          summary: "8F午餐 → 4F服飾 → 1–2F UNIQLO · 15:00集合",
-          notes: "入館後搭中央電梯直上8F「LINKS DINING」，立即分2–3桌就座用餐。\n餐後樓層動線（自由逛）：8F餐廳區搭手扶梯往下 → 4F coen服飾選品逛逛 → 再搭電梯或手扶梯到1–2F「UNIQLO UMEDA」西日本最大旗艦店（1F、2F打通，手扶梯可互通）。\n⭐走散集合點：7F電梯口（各樓層電梯位置相同，搭電梯最快回到集合點）。宣布：15:00在7F電梯口集合，走散不找人。14:50開始廣播收攏。\n\n<a href=\"https://www.google.com/maps/search/?api=1&query=LINKS+UMEDA\" target=\"_blank\" style=\"color:#3D6B5C;text-decoration:underline;\">📍 LINKS UMEDA 在Google Maps開啟</a>",
+          id: "d4-10", time: "11:20–15:20", title: "LINKS UMEDA 午餐 + 購物",
+          summary: "8F午餐 → ABC-MART → coen → UNIQLO 1–2F · 15:20集合",
+          notes: "入館後搭中央電梯直上8F「LINKS DINING」，立即分2–3桌就座用餐。\n餐後樓層動線（自由逛）：8F餐廳區搭手扶梯往下 → 4F ABC-MART（鞋類，可退稅）→ 4F coen服飾選品逛逛 → 再搭電梯或手扶梯到1–2F「UNIQLO UMEDA」西日本最大旗艦店（1F、2F打通，手扶梯可互通）。\n⭐走散集合點：7F電梯口（各樓層電梯位置相同，搭電梯最快回到集合點）。宣布：15:20在7F電梯口集合，走散不找人。15:10開始廣播收攏。\n\n<a href=\"https://www.google.com/maps/search/?api=1&query=LINKS+UMEDA\" target=\"_blank\" style=\"color:#3D6B5C;text-decoration:underline;\">📍 LINKS UMEDA 在Google Maps開啟</a>",
           type: "food", status: "todo"
         },
         {
-          id: "d4-11", time: "15:00–15:50", title: "Mizuno 大阪茶屋町旗艦店",
-          summary: "7層樓 · 跑鞋童鞋全齊 · 16:00整隊",
-          notes: "從LINKS UMEDA出館，沿茶屋町通往北步行約5分鐘（朝阪急梅田站茶屋町口方向），即達Mizuno（茶屋町口正對面，明顯招牌）。\n樓層導覽：1F男裝休閒／2F跑步＆多功能訓練（大人跑鞋主戰場）／3F足球排球等球類／4F游泳＆球拍運動／5F戶外用品／6F棒壘球／7F高爾夫。童鞋可在1F或2F一併找尺寸，建議想買跑鞋的大人優先去2F。15:50廣播集合，16:00整隊出發。\n\n<a href=\"https://www.google.com/maps/dir/?api=1&origin=LINKS+UMEDA&destination=Mizuno+Osaka+Chayamachi&travelmode=walking\" target=\"_blank\" style=\"color:#3D6B5C;text-decoration:underline;\">🗺️ LINKS UMEDA→Mizuno 步行導航</a>",
+          id: "d4-11", time: "15:20–16:10", title: "Mizuno 大阪茶屋町旗艦店",
+          summary: "7層樓 · 跑鞋童鞋全齊 · 16:10整隊",
+          notes: "從LINKS UMEDA出館，沿茶屋町通往北步行約5分鐘（朝阪急梅田站茶屋町口方向），即達Mizuno（茶屋町口正對面，明顯招牌）。\n樓層導覽：1F男裝休閒／2F跑步＆多功能訓練（大人跑鞋主戰場）／3F足球排球等球類／4F游泳＆球拍運動／5F戶外用品／6F棒壘球／7F高爾夫。童鞋可在1F或2F一併找尺寸，建議想買跑鞋的大人優先去2F。16:00廣播集合，16:10整隊出發。\n\n<a href=\"https://www.google.com/maps/dir/?api=1&origin=LINKS+UMEDA&destination=Mizuno+Osaka+Chayamachi&travelmode=walking\" target=\"_blank\" style=\"color:#3D6B5C;text-decoration:underline;\">🗺️ LINKS UMEDA→Mizuno 步行導航</a>",
           type: "spot", status: "todo"
         },
         {
-          id: "d4-12", time: "16:00", title: "⭐ 地下街 ディアモール",
+          id: "d4-12", time: "16:10", title: "⭐ 地下街 ディアモール",
           summary: "酷暑走地下街 · 全程冷氣不曬太陽",
           notes: "七月酷暑：走地下街「ディアモール」，全程冷氣不曬太陽。路線：Mizuno正門出發→沿茶屋町通往南走回阪急梅田站方向→由阪急百貨/大阪站方向地下入口下樓進入「ディアモール」→跟「北新地駅」指標往南走→第2大樓B2出口上樓。約18–20分鐘，16:20抵達。\n\n<a href=\"https://www.google.com/maps/dir/?api=1&origin=Mizuno+Osaka+Chayamachi&destination=Osaka+Ekimae+Daini+Building&travelmode=walking\" target=\"_blank\" style=\"color:#3D6B5C;text-decoration:underline;\">🗺️ Mizuno→第2大樓 步行導航（地面路線參考，實際走地下街ディアモール）</a>",
           type: "note", status: "todo"
         },
         {
-          id: "d4-13", time: "16:20–18:00", title: "大阪站前第2大樓 居酒屋街",
-          summary: "B1/B2 · 昭和懷舊 · 17:50廣播集合",
-          notes: "40年老大樓，各式商店。分組自由逛，17:50廣播集合。",
+          id: "d4-13", time: "16:35–18:00", title: "大阪駅前第2大樓 Fishing Eight + 自由活動",
+          summary: "🎣 B2 Fishing Eight釣具 · B1居酒屋街 · 17:50廣播集合",
+          notes: "⭐ Fishing Eight 釣具（B2）：路亞、磯釣、鰻釣等裝備齊全，可退稅（帶護照）。B1居酒屋街昭和懷舊風格，各式燒烤居酒屋密集。分組自由逛，17:50廣播集合。",
           type: "spot", status: "todo"
         },
         {
