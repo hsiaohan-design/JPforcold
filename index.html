@@ -162,13 +162,14 @@ const TRIP = {
       title: "神戶入境",
       people: "10大7小",
       transport: "包車全程",
-      hotel: "神戶中央區 Kotonoocho",
+      hotel: "Minatocho（兵庫區）/ Kotonoocho（中央區）",
       meetup: "包車停車處（出口外）",
       motto: "先拍照、先吃飯、單向移動、不折返",
-      route: "神戶空港 → 動物王國 → 天滿神社異人館 → Okatora神戶牛燒肉 → 🌃Meriken Park夜景",
+      route: "神戶空港 → 動物王國 → 🍞麵包超人博物館 → 住宿Check-in → Okatora神戶牛燒肉 → 🌃Meriken Park夜景",
       memos: [
         "神戶動物王國飛鳥秀時間務必出發前確認（官網或電話）",
-        "⛩️ 北野天滿神社・異人館：北野坡道多，建議動物王國結束後直接前往",
+        "🍞 麵包超人兒童博物館最後入場16:00，請確認15:30前抵達！",
+        "住宿分兩處：A組→Minatocho（兵庫區），B組→Kotonoocho（中央區）",
         "✅ Okatora神戶牛燒肉已訂位（7/18 18:00，18人，林筱涵）",
         "包車司機聯絡方式放在手機顯眼位置",
         "全天走散集合點：包車司機停車處（出發前告知全員）",
@@ -205,19 +206,19 @@ const TRIP = {
           type: "note", status: "todo"
         },
         {
-          id: "d1-6", time: "14:55", title: "集合 → 北野天滿神社出發",
+          id: "d1-6", time: "15:00", title: "集合 → 麵包超人博物館出發",
           summary: "確認無人落隊，車程約25分鐘",
-          notes: "集合全員，確認無人落隊。前往北野天滿神社（車程約25分鐘）。行李放車上，不需下車取行李。",
+          notes: "集合全員，確認無人落隊。前往神戶ハーバーランド麵包超人兒童博物館（車程約15-20分鐘）。",
           type: "meetup", status: "todo"
         },
         {
-          id: "d1-7", time: "14:55–16:30", title: "⛩️ 北野天滿神社 ＋ 異人館街",
+          id: "d1-7", time: "15:30–17:00", title: "🍞 麵包超人兒童博物館",
           summary: "北野坡道散步 · 拍西洋老屋 · 16:30集合",
           notes: "司機停於北野周邊停車場。帶隊方向：自由散步西洋老屋區。16:20廣播集合，16:30整隊出發。",
           type: "spot", status: "todo"
         },
         {
-          id: "d1-8", time: "16:30–17:30", title: "🏨 飯店 Check-in ＋ 放行李",
+          id: "d1-8", time: "17:00–17:30", title: "🏨 飯店 Check-in（分兩處）",
           summary: "Kotonoocho · 行李放下換衣 · 輕裝出發",
           notes: "抵達 Kotonoocho 住宿。全員行李放入房間（或寄放前台）。換衣服、輕裝準備步行去吃飯。",
           type: "spot", status: "todo"
@@ -235,13 +236,13 @@ const TRIP = {
           type: "food", status: "done"
         },
         {
-          id: "d1-11", time: "19:45–20:30", title: "🌃 Meriken Park 夜景 ＋ BE KOBE",
+          id: "d1-11", time: "19:40–20:30", title: "🌃 Meriken Park 夜景 ＋ BE KOBE",
           summary: "飯後步行15分鐘 · 夜景打燈 · 拍大合照",
           notes: "飯後步行至神戶港 Meriken Park（約15分鐘）。BE KOBE 地標夜間打燈超美，拍大合照！選擇性自由活動。",
           type: "photo", status: "todo"
         },
         {
-          id: "d1-12", time: "20:30", title: "步行返回住宿",
+          id: "d1-12", time: "20:30", title: "各自返回住宿（包車已結束）",
           summary: "Meriken Park 步行約15分鐘回飯店",
           notes: "步行返回 Kotonoocho 住宿（約15分鐘）。確認所有人回房、無落隊。",
           type: "transport", status: "todo"
@@ -262,11 +263,11 @@ const TRIP = {
       hotel: "神戶中央區 Kotonoocho（連住）",
       meetup: "包車停車處",
       motto: "先合照、再登頂、體力不夠就拍照",
-      route: "住宿 → 姬路城 → 城前商店街 → 麵包超人博物館 → 三宮散步 → 蟹藏螃蟹",
+      route: "住宿 → 姬路城 → 城前商店街 → ⛩️天滿神社異人館 → 三宮散步 → 蟹藏螃蟹",
       memos: [
         "姬路城天守閣7月旺季排隊時間長，提前確認是否要登頂",
         "✅ 蟹藏三宮 18:00已訂位（兩筆：16名+2名，林筱涵）",
-        "🍞 麵包超人博物館最後入場16:00，13:30務必從姬路出發！",
+        "⛩️ 北野天滿神社・異人館街：北野坡道多，穿好走鞋，孩子注意安全！",
         "明日（7/20）換住大阪，確認行李打包與退房時間",
       ],
       timeline: [
@@ -295,13 +296,13 @@ const TRIP = {
           type: "food", status: "todo"
         },
         {
-          id: "d2-5", time: "13:30", title: "包車出發 → 神戶ハーバーランド",
+          id: "d2-5", time: "13:30", title: "包車出發 → 北野天滿神社",
           summary: "車程約50分鐘，孩子可午睡",
-          notes: "前往神戶ハーバーランド麵包超人博物館（車程約50分鐘）。⚠️ 務必 13:30 出發，最後入場 16:00！孩子可在車上午睡補體力。",
+          notes: "前往北野天滿神社（車程約35分鐘）。孩子可在車上休息補體力。",
           type: "transport", status: "todo"
         },
         {
-          id: "d2-6", time: "14:15–16:30", title: "🍞 麵包超人兒童博物館",
+          id: "d2-6", time: "14:15–16:00", title: "⛩️ 北野天滿神社 ＋ 異人館街",
           summary: "館內逛遊 + 表演 · 16:00最後入場 · 提前確認表演時刻表",
           notes: "抵達後確認當日表演時刻表。帶孩子先看表演或逛館內。⚠️ 最後入場16:00，確保準時抵達。16:30廣播集合整隊。",
           type: "spot", status: "todo"
