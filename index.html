@@ -151,6 +151,24 @@ const TRIP = {
     "七月酷暑：多找地下街走，保留體力給購物觀光",
   ],
 
+  cardGuide: {
+    updated: "2026/7/11",
+    summary: [
+      "【一般消費】先刷聯邦吉鶴卡（欣/4507、涵/4002）累積¥10萬→回饋¥1萬（10%）",
+      "【額度用完後】中信 uniopen（欣/2919）最高11%；8%加碼上限約¥3萬/月",
+      "【PayPay 店】iPASS MONEY：首次約¥1萬→10%；其後3.5%，上限約¥2.1萬/月（活動2026/7–9）",
+      "【唐吉訶德】先出示手機優惠券 → 吉鶴卡 → 玉山熊本熊 → 富邦J（欣/4903）",
+      "⚠️ 街口支付2026上半年回饋已到期（6/30結束），暫停主力使用",
+    ],
+    rows: [
+      { tag: "一般店",    card: "聯邦吉鶴卡 欣/4507",                  reward: "滿¥10萬→回饋¥1萬（10%）",                    note: "確認活動期間及是否需登錄" },
+      { tag: "一般店",    card: "聯邦吉鶴卡 涵/4002",                  reward: "滿¥10萬→回饋¥1萬（10%）",                    note: "兩卡門檻分開計算" },
+      { tag: "一般店",    card: "中信 uniopen 欣/2919",                reward: "最高11%（3%無上限＋8%加碼，上限約¥3萬/月）",  note: "超額後仍有3%無上限" },
+      { tag: "PayPay",   card: "iPASS MONEY",                          reward: "首次¥1萬→10%；其後3.5%（上限約¥2.1萬/月）",  note: "2026/7–9；不可綁信用卡" },
+      { tag: "唐吉訶德", card: "①優惠券 ②吉鶴 ③熊本熊 ④富邦J/4903", reward: "吉鶴符合滿¥2萬回¥6千≈30%",                   note: "先出示手機優惠券再結帳" },
+    ],
+  },
+
   days: [
     // ────────────────────────────────
     // DAY 1
@@ -865,6 +883,14 @@ const TRIP = {
       <div class="rounded-2xl p-4" style="background:#fff; border:1px solid #EAE6E0;">
         <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:#1C1A17;">帶隊黃金原則</p>
         <div id="golden-rules-memo" class="space-y-2"></div>
+
+      <!-- 💳 刷卡攻略 -->
+      <div class="rounded-2xl p-4 mb-3" style="background:#fff; border:1px solid #EAE6E0;">
+        <p class="text-xs font-bold uppercase tracking-widest mb-1" style="color:#1C1A17;">💳 刷卡攻略</p>
+        <p class="text-xs mb-3" style="color:#7A756D;">更新：2026/7/11 · 金額為日圓</p>
+        <div id="card-guide-summary" class="space-y-2 mb-4"></div>
+        <div id="card-guide-table" class="space-y-2"></div>
+      </div>
       </div>
     </div>
   </div>
@@ -1936,6 +1962,14 @@ function renderMemo(day) {
       <p class="text-xs leading-relaxed" style="color:#7A756D;">${r}</p>
     </div>
   `).join('');
+
+  // 💳 Card Guide
+  const cgEl1 = document.getElementById('card-guide-summary');
+  const cgEl2 = document.getElementById('card-guide-table');
+  if (cgEl1 && TRIP.cardGuide) {
+    cgEl1.innerHTML = TRIP.cardGuide.summary.map((s,i) => `<div class="flex items-start gap-2 text-xs py-1" style="border-bottom:1px solid #EAE6E0;"><span class="flex-shrink-0 font-bold" style="color:#3D6B5C;">${i+1}</span><span style="color:#1C1A17;">${s}</span></div>`).join('');
+    cgEl2.innerHTML = TRIP.cardGuide.rows.map(r => `<div class="rounded-lg p-3 mb-2" style="background:#F4F1ED;"><div class="flex gap-2 items-center mb-1"><span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background:#3D6B5C;color:#fff;">${r.tag}</span><span class="text-xs font-bold" style="color:#1C1A17;">${r.card}</span></div><div class="text-xs mb-1" style="color:#3D6B5C;">💰 ${r.reward}</div><div class="text-xs" style="color:#7A756D;">⚠️ ${r.note}</div></div>`).join('');
+  }
 }
 
 // ──────────────────────────────────────────
