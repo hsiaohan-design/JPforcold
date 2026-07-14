@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>梅田・大阪站 行程動線圖</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #F5F0E8;
+  font-family: -apple-system, "Hiragino Sans", "Noto Sans TC", sans-serif;
+  padding: 14px 10px 40px;
+}
+h1 { text-align: center; font-size: 16px; font-weight: 800; color: #1C1A17; margin-bottom: 3px; }
+.subtitle { text-align: center; font-size: 11px; color: #7A756D; margin-bottom: 10px; }
+.legend { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 10.5px; color: #555; }
+.legend-box { width: 16px; height: 12px; border-radius: 2px; }
+svg { width: 100%; max-width: 490px; display: block; margin: 0 auto; }
+.route-card {
+  max-width: 490px; margin: 12px auto 0;
+  background: #fff; border-radius: 12px; padding: 13px 15px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+}
+.route-title { font-size: 12px; font-weight: 700; color: #1C1A17; margin-bottom: 9px; padding-bottom: 6px; border-bottom: 1px solid #EAE6E0; }
+.route-step { display: flex; gap: 9px; margin-bottom: 7px; align-items: flex-start; }
+.step-num { color: #fff; font-size: 11px; font-weight: 800; width: 21px; height: 21px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.step-body { flex: 1; }
+.step-name { font-size: 13px; font-weight: 700; color: #1C1A17; }
+.step-sub { font-size: 10.5px; color: #7A756D; margin-top: 2px; line-height: 1.45; }
+.step-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 20px; margin-top: 3px; }
+.walk-row { display: flex; align-items: center; gap: 5px; margin: -2px 0 5px 30px; font-size: 10px; color: #9CA3AF; }
+</style>
+</head>
+<body>
+
+<h1>梅田・大阪站 行程動線圖</h1>
+<div class="subtitle">D4 · 7/21（二）· 北↑ · ①②③④⑤ = 行程順序</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-box" style="background:#FEE2E2; border:2px solid #EF4444;"></div>我的行程</div>
+  <div class="legend-item"><div class="legend-box" style="background:#FFF7ED; border:2px solid #F59E0B;"></div>★ 晚餐</div>
+  <div class="legend-item"><div class="legend-box" style="background:#F0FDF4; border:2px solid #22C55E;"></div>搭車離開</div>
+  <div class="legend-item"><div class="legend-box" style="background:#F3F4F6; border:1.5px solid #9CA3AF;"></div>周邊建築</div>
+</div>
+
+<svg viewBox="0 0 490 590" xmlns="http://www.w3.org/2000/svg">
+
+<text x="245" y="13" text-anchor="middle" font-size="10" fill="#BCBCBC" font-family="sans-serif" font-weight="700">↑ 北（Chayamachi 方向）</text>
+<text x="245" y="582" text-anchor="middle" font-size="10" fill="#BCBCBC" font-family="sans-serif">↓ 南（心齋橋・難波）</text>
+<text x="8"   y="320" font-size="10" fill="#BCBCBC" font-family="sans-serif" text-anchor="middle" transform="rotate(-90 8 320)">← 西（四橋線）</text>
+<text x="482" y="320" font-size="10" fill="#BCBCBC" font-family="sans-serif" text-anchor="middle" transform="rotate(90 482 320)">東 →</text>
+
+<g transform="translate(435,46)">
+  <circle cx="0" cy="0" r="34" fill="#fff" stroke="#D1D5DB" stroke-width="1.5"/>
+  <line x1="0" y1="-27" x2="0" y2="27" stroke="#E5E7EB" stroke-width="1"/>
+  <line x1="-27" y1="0" x2="27" y2="0" stroke="#E5E7EB" stroke-width="1"/>
+  <polygon points="0,-26 -4,-11 0,-17 4,-11" fill="#EF4444"/>
+  <text x="0" y="-29" text-anchor="middle" font-size="10" font-weight="800" fill="#EF4444" font-family="sans-serif">北</text>
+  <text x="0"  y="41" text-anchor="middle" font-size="9" fill="#9CA3AF" font-family="sans-serif">南</text>
+  <text x="-40" y="4" text-anchor="middle" font-size="9" fill="#9CA3AF" font-family="sans-serif">西</text>
+  <text x="40"  y="4" text-anchor="middle" font-size="9" fill="#9CA3AF" font-family="sans-serif">東</text>
+</g>
+
+<rect x="14" y="22" width="135" height="50" rx="5" fill="#FFF1F2" stroke="#EF4444" stroke-width="2" stroke-dasharray="5,3"/>
+<circle cx="27" cy="34" r="10" fill="#EF4444"/>
+<text x="27" y="38" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" font-family="sans-serif">③</text>
+<text x="89" y="39" text-anchor="middle" font-size="12" font-weight="800" fill="#B91C1C" font-family="sans-serif">Mizuno 茶屋町</text>
+<text x="89" y="52" text-anchor="middle" font-size="9" fill="#EF4444" font-family="sans-serif">ミズノ茶屋町旗艦店</text>
+<text x="89" y="64" text-anchor="middle" font-size="8.5" fill="#9CA3AF" font-family="sans-serif">阪急茶屋町口東側</text>
+
+<line x1="149" y1="45" x2="224" y2="52" stroke="#EF4444" stroke-width="1.8" stroke-dasharray="5,3"/>
+<text x="190" y="42" text-anchor="middle" font-size="9" fill="#EF4444" font-family="sans-serif">往東南步行8分</text>
+
+<rect x="224" y="22" width="155" height="90" rx="5" fill="#FFF7ED" stroke="#F59E0B" stroke-width="2.5"/>
+<rect x="224" y="22" width="62" height="20" rx="4" fill="#F59E0B"/>
+<text x="255" y="36" text-anchor="middle" font-size="9.5" font-weight="800" fill="#fff" font-family="sans-serif">★ 晚餐 ④</text>
+<circle cx="366" cy="34" r="10" fill="#F59E0B"/>
+<text x="366" y="38" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" font-family="sans-serif">④</text>
+<text x="302" y="55" text-anchor="middle" font-size="12" font-weight="800" fill="#92400E" font-family="sans-serif">Grand Front 大阪</text>
+<text x="302" y="69" text-anchor="middle" font-size="9" fill="#B45309" font-family="sans-serif">グランフロント大阪 南館</text>
+<text x="302" y="82" text-anchor="middle" font-size="10" font-weight="700" fill="#B45309" font-family="sans-serif">南館（晚餐）</text>
+<text x="302" y="95" text-anchor="middle" font-size="8.5" fill="#D97706" font-family="sans-serif">北館由南館上樓進入</text>
+<text x="302" y="107" text-anchor="middle" font-size="8" fill="#9CA3AF" font-family="sans-serif">門1　門2</text>
+
+<rect x="224" y="112" width="155" height="42" rx="4" fill="#FFF7ED" stroke="#F59E0B" stroke-width="1.2" stroke-dasharray="4,2"/>
+<text x="302" y="131" text-anchor="middle" font-size="10" font-weight="600" fill="#B45309" font-family="sans-serif">Grand Front 北館（上樓）</text>
+<text x="302" y="145" text-anchor="middle" font-size="8.5" fill="#D97706" font-family="sans-serif">グランフロント大阪 北館</text>
+
+<line x1="302" y1="154" x2="296" y2="195" stroke="#3B82F6" stroke-width="2"/>
+<text x="310" y="177" font-size="9" fill="#3B82F6" font-family="sans-serif">連通↓</text>
+
+<line x1="224" y1="68" x2="152" y2="510" stroke="#22C55E" stroke-width="2.5" stroke-dasharray="6,3"/>
+<text x="170" y="330" font-size="9" fill="#16A34A" font-family="sans-serif" transform="rotate(-86 170 330)">往西南步行約10分</text>
+
+<rect x="14" y="95" width="158" height="90" rx="5" fill="#FFF1F2" stroke="#EF4444" stroke-width="2.5"/>
+<rect x="14" y="95" width="58" height="20" rx="4" fill="#EF4444"/>
+<text x="43" y="109" text-anchor="middle" font-size="9.5" font-weight="800" fill="#fff" font-family="sans-serif">★ 我的行程</text>
+<circle cx="162" cy="107" r="10" fill="#EF4444"/>
+<text x="162" y="111" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" font-family="sans-serif">②</text>
+<text x="93" y="127" text-anchor="middle" font-size="12" font-weight="800" fill="#B91C1C" font-family="sans-serif">友都八喜</text>
+<text x="93" y="140" text-anchor="middle" font-size="9" fill="#9CA3AF" font-family="sans-serif">ヨドバシカメラ梅田</text>
+<text x="93" y="153" text-anchor="middle" font-size="10" font-weight="700" fill="#EF4444" font-family="sans-serif">= LINKS UMEDA</text>
+<text x="93" y="165" text-anchor="middle" font-size="9" fill="#DC2626" font-family="sans-serif">UNIQLO・藥妝・電鍋退稅</text>
+<text x="93" y="177" text-anchor="middle" font-size="8.5" fill="#9CA3AF" font-family="sans-serif">集合：1F 北出口 15:20</text>
+
+<line x1="62" y1="95" x2="56" y2="72" stroke="#EF4444" stroke-width="1.8" stroke-dasharray="4,3"/>
+<text x="4" y="83" font-size="9" fill="#EF4444" font-family="sans-serif">往北</text>
+<text x="4" y="94" font-size="9" fill="#EF4444" font-family="sans-serif">↑5分</text>
+
+<line x1="172" y1="130" x2="224" y2="68" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="3,2"/>
+<text x="202" y="96" font-size="8.5" fill="#3B82F6" font-family="sans-serif" text-anchor="middle">室內連通</text>
+
+<rect x="14" y="215" width="88" height="68" rx="4" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="1.5"/>
+<text x="58" y="248" text-anchor="middle" font-size="13" font-weight="700" fill="#374151" font-family="sans-serif">阪急</text>
+<text x="58" y="261" text-anchor="middle" font-size="9" fill="#374151" font-family="sans-serif">阪急梅田駅</text>
+<text x="58" y="274" text-anchor="middle" font-size="8.5" fill="#9CA3AF" font-family="sans-serif">（西側）</text>
+
+<rect x="14" y="292" width="88" height="55" rx="4" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="1.5"/>
+<text x="58" y="318" text-anchor="middle" font-size="13" font-weight="700" fill="#374151" font-family="sans-serif">阪神</text>
+<text x="58" y="331" text-anchor="middle" font-size="9" fill="#374151" font-family="sans-serif">阪神梅田駅</text>
+<text x="58" y="343" text-anchor="middle" font-size="8.5" fill="#9CA3AF" font-family="sans-serif">（西側）</text>
+
+<line x1="102" y1="242" x2="196" y2="240" stroke="#3B82F6" stroke-width="1.5"/>
+<text x="150" y="237" text-anchor="middle" font-size="8.5" fill="#3B82F6" font-family="sans-serif">連通</text>
+
+<rect x="108" y="220" width="84" height="125" rx="4" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="1.5"/>
+<text x="150" y="272" text-anchor="middle" font-size="12" font-weight="700" fill="#374151" font-family="sans-serif">大丸梅田</text>
+<text x="150" y="285" text-anchor="middle" font-size="8.5" fill="#374151" font-family="sans-serif">大丸梅田店</text>
+<text x="150" y="298" text-anchor="middle" font-size="8.5" fill="#9CA3AF" font-family="sans-serif">だいまるうめだてん</text>
+<text x="150" y="311" text-anchor="middle" font-size="8" fill="#9CA3AF" font-family="sans-serif">（西口 連通）</text>
+
+<rect x="196" y="195" width="148" height="100" rx="5" fill="#FEE2E2" stroke="#EF4444" stroke-width="2.5"/>
+<circle cx="212" cy="210" r="10" fill="#EF4444"/>
+<text x="212" y="214" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" font-family="sans-serif">①</text>
+<text x="270" y="232" text-anchor="middle" font-size="12" font-weight="800" fill="#B91C1C" font-family="sans-serif">大阪站</text>
+<text x="270" y="244" text-anchor="middle" font-size="9" fill="#DC2626" font-family="sans-serif">大阪駅（おおさかえき）</text>
+<text x="270" y="256" text-anchor="middle" font-size="9.5" font-weight="700" fill="#EF4444" font-family="sans-serif">JR 環狀線 抵達</text>
+<text x="270" y="269" text-anchor="middle" font-size="9" fill="#DC2626" font-family="sans-serif">中央口 出站</text>
+<text x="270" y="282" text-anchor="middle" font-size="8.5" fill="#9CA3AF" font-family="sans-serif">→ 往西北連通至 LINKS</text>
+
+<line x1="196" y1="230" x2="172" y2="170" stroke="#3B82F6" stroke-width="2.5"/>
+<text x="162" y="206" font-size="9" fill="#3B82F6" font-family="sans-serif">連通</text>
+<text x="162" y="218" font-size="9" fill="#3B82F6" font-family="sans-serif">2F↑</text>
+
+<rect x="352" y="210" width="110" height="68" rx="4" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="1.5"/>
+<text x="407" y="242" text-anchor="middle" font-size="11" font-weight="700" fill="#374151" font-family="sans-serif">Lucua</text>
+<text x="407" y="254" text-anchor="middle" font-size="8.5" fill="#374151" font-family="sans-serif">ルクア大阪</text>
+<text x="407" y="267" text-anchor="middle" font-size="8.5" fill="#9CA3AF" font-family="sans-serif">lululemon 等（東側）</text>
+
+<line x1="344" y1="240" x2="352" y2="240" stroke="#3B82F6" stroke-width="2"/>
+<text x="348" y="236" text-anchor="middle" font-size="8.5" fill="#3B82F6" font-family="sans-serif">連通</text>
+
+<rect x="352" y="290" width="110" height="58" rx="4" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="1.5"/>
+<text x="407" y="317" text-anchor="middle" font-size="10" font-weight="700" fill="#374151" font-family="sans-serif">Lucua 1100</text>
+<text x="407" y="329" text-anchor="middle" font-size="8.5" fill="#374151" font-family="sans-serif">ルクアイーレ</text>
+<text x="407" y="342" text-anchor="middle" font-size="8.5" fill="#9CA3AF" font-family="sans-serif">（大阪站東北側）</text>
+<line x1="407" y1="278" x2="407" y2="290" stroke="#3B82F6" stroke-width="1.5"/>
+<text x="414" y="286" font-size="8.5" fill="#3B82F6" font-family="sans-serif">連通</text>
+
+<rect x="196" y="308" width="148" height="45" rx="4" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1.5" stroke-dasharray="4,2"/>
+<text x="270" y="326" text-anchor="middle" font-size="10" fill="#7C3AED" font-family="sans-serif">Whity Umeda 地下街</text>
+<text x="270" y="338" text-anchor="middle" font-size="8.5" fill="#8B5CF6" font-family="sans-serif">ホワイティうめだ</text>
+<text x="270" y="350" text-anchor="middle" font-size="9" fill="#8B5CF6" font-family="sans-serif">→ 西梅田方向</text>
+<line x1="270" y1="295" x2="270" y2="308" stroke="#9CA3AF" stroke-width="1" stroke-dasharray="2,2"/>
+
+<rect x="108" y="360" width="80" height="55" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+<text x="148" y="393" text-anchor="middle" font-size="22" font-weight="800" fill="#D1D5DB" font-family="sans-serif">P</text>
+
+<rect x="196" y="368" width="148" height="48" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+<text x="207" y="386" font-size="9.5" fill="#BCBCBC" font-family="sans-serif">☆ 格蘭比亞大阪</text>
+<text x="207" y="398" font-size="8.5" fill="#D1D5DB" font-family="sans-serif">ホテルグランヴィア大阪</text>
+<text x="207" y="410" font-size="8.5" fill="#D1D5DB" font-family="sans-serif">（大阪駅直結）</text>
+
+<rect x="14" y="368" width="88" height="55" rx="4" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1"/>
+<text x="58" y="400" text-anchor="middle" font-size="11" font-weight="700" fill="#D1D5DB" font-family="sans-serif">三番街</text>
+
+<rect x="14" y="500" width="148" height="52" rx="5" fill="#F0FDF4" stroke="#22C55E" stroke-width="2.5"/>
+<circle cx="30" cy="513" r="10" fill="#22C55E"/>
+<text x="30" y="517" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" font-family="sans-serif">⑤</text>
+<text x="110" y="512" text-anchor="middle" font-size="12" font-weight="800" fill="#166534" font-family="sans-serif">西梅田駅</text>
+<text x="110" y="524" text-anchor="middle" font-size="8.5" fill="#16A34A" font-family="sans-serif">にしうめだえき</text>
+<text x="110" y="537" text-anchor="middle" font-size="9.5" fill="#16A34A" font-family="sans-serif">四橋線 → 花園町 → 民宿</text>
+
+<line x1="196" y1="330" x2="162" y2="512" stroke="#22C55E" stroke-width="1.5" stroke-dasharray="3,2"/>
+<text x="183" y="425" font-size="9" fill="#16A34A" font-family="sans-serif" text-anchor="middle">地下通往西梅田</text>
+
+<rect x="14" y="438" width="168" height="56" rx="6" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1.5"/>
+<text x="98" y="453" text-anchor="middle" font-size="9.5" font-weight="700" fill="#92400E" font-family="sans-serif">📌 方位補充說明</text>
+<text x="22" y="467" font-size="8.5" fill="#78350F" font-family="sans-serif">阪急・阪神・大丸 = 大阪站的西側</text>
+<text x="22" y="480" font-size="8.5" fill="#78350F" font-family="sans-serif">不是「南邊」，是「偏西略南」</text>
+<text x="22" y="492" font-size="8.5" fill="#78350F" font-family="sans-serif">走路距離：阪急→大阪站 約5分鐘</text>
+
+</svg>
+
+<div class="route-card">
+  <div class="route-title">📍 D4 · 7/21（二）梅田全日動線</div>
+  <div class="route-step">
+    <div class="step-num" style="background:#EF4444;">①</div>
+    <div class="step-body">
+      <div class="step-name">大阪站（JR 環狀線）抵達</div>
+      <div class="step-sub">中央口出站，往西北方向連通2F → LINKS UMEDA</div>
+    </div>
+  </div>
+  <div class="walk-row">↓ 室內連通2F 往西北 約5–7分鐘</div>
+  <div class="route-step">
+    <div class="step-num" style="background:#EF4444;">②</div>
+    <div class="step-body">
+      <div class="step-name">LINKS UMEDA（友都八喜）</div>
+      <div class="step-sub">午餐（8F）→ UNIQLO・藥妝・電鍋退稅（帶護照）</div>
+      <span class="step-tag" style="background:#FEE2E2; color:#B91C1C;">集合：1F 北出口 15:20</span>
+    </div>
+  </div>
+  <div class="walk-row">↓ 從北出口往北步行約5分鐘（茶屋町通方向）</div>
+  <div class="route-step">
+    <div class="step-num" style="background:#EF4444;">③</div>
+    <div class="step-body">
+      <div class="step-name">Mizuno 茶屋町旗艦店</div>
+      <div class="step-sub">7層樓旗艦店，阪急茶屋町口東側，營業至 20:00</div>
+    </div>
+  </div>
+  <div class="walk-row">↓ 往東南步行約8分鐘（往大阪站北口 → Grand Front）</div>
+  <div class="route-step">
+    <div class="step-num" style="background:#F59E0B;">④</div>
+    <div class="step-body">
+      <div class="step-name">Grand Front 大阪 南館 ★ 晚餐</div>
+      <div class="step-sub">大阪站正北，餐後往西南穿 Whity Umeda 地下街</div>
+    </div>
+  </div>
+  <div class="walk-row">↓ Whity Umeda 地下街往西 → 西梅田 約10分鐘</div>
+  <div class="route-step">
+    <div class="step-num" style="background:#22C55E;">⑤</div>
+    <div class="step-body">
+      <div class="step-name">西梅田駅（四橋線）→ 民宿</div>
+      <div class="step-sub">四橋線 Y11 西梅田 → Y17 花園町，步行至民宿</div>
+      <span class="step-tag" style="background:#F0FDF4; color:#166534;">直達不轉車</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
